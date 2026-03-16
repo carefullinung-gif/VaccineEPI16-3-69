@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vaccine Guide - OPD 27 Maharaj Nakorn Chiang Mai</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+
+            --navy: #001F5B;
+
+            --primary: #8ECAE6; 
+
+            --secondary: #FFB7C5; 
+
+            --accent: #A5A6F6; 
+
+            --success: #6ACC87; 
+
+            --danger: #FFADAD;
+
+            --optional-border: #FFD60A; 
+
+            --bg-body: radial-gradient(circle at 10% 20%, rgb(239, 246, 255) 0%, rgb(219, 234, 254) 90%);
+
+            --bg-container: rgba(255, 255, 255, 0.90);
+
+            --bg-card: rgba(255, 255, 255, 0.70);
+
+            --bg-optional-card: rgba(255, 253, 240, 0.75);
+
+            --dark: #4A4A4A;
+
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+
+            font-family: 'Sarabun', sans-serif; 
+
+            background: var(--bg-body);
+
+            padding: 15px; margin: 0; line-height: 1.6; color: var(--dark);
+
+        }
+
+        .container { 
+
+            max-width: 1000px; margin: auto; background: var(--bg-container); 
+
+            padding: 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
+
+            backdrop-filter: blur(15px); border: 2px solid #ffffff;
+
+        }
+
+        .header { text-align: center; margin-bottom: 25px; }
+
+        .header h1 { color: var(--navy); margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
+
+        .header p { margin: 5px 0; font-weight: bold; color: #6C7A92; font-size: 0.9em; } 
+
+        .contact { color: #888; font-size: 0.8em; background: rgba(255, 255, 255, 0.8); display: inline-block; padding: 5px 20px; border-radius: 20px; margin-top: 5px; border: 1px solid #eee; }
+
+        .guide-container { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; }
+
+        .guide-box { flex: 1 1 300px; background: var(--bg-card); border-radius: 20px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); }
+
+        .guide-box h4 { margin-top: 0; color: #5A9BD5; border-bottom: 2px dashed #D6EAF8; padding-bottom: 5px; }
+
+        .guide-box ul { padding-left: 20px; margin-bottom: 0; font-size: 0.95em; }
+
+        .emergency-box { background: rgba(240, 255, 244, 0.75); border: 2px solid var(--success); border-radius: 20px; padding: 18px; margin-top: 20px; backdrop-filter: blur(5px); }
+
+        .selector-group { margin: 30px 0; text-align: center; }
+
+        select { 
+
+            padding: 15px; border-radius: 20px; border: 2px solid var(--primary); 
+
+            width: 100%; max-width: 500px; font-size: 18px; outline: none;
+
+            background: rgba(255, 255, 255, 0.8); color: var(--navy); font-weight: bold; cursor: pointer;
+
+        }
+
+        .vaccine-card { background: var(--bg-card); margin: 15px 0; padding: 22px; border-radius: 25px; border-left: 8px solid var(--primary); backdrop-filter: blur(5px); transition: all 0.3s; }
+
+        .optional-card { background-color: var(--bg-optional-card) !important; border-left-color: var(--optional-border); }
+
+        .screening { border-left-color: #e74c3c; background: rgba(255, 240, 240, 0.75); }
+
+        /* ลดขนาดชื่อวัคซีนลง 2 ระดับ (จาก 1.25em เป็น 1.05em) */
+
+        .vaccine-name { font-size: 1.05em; font-weight: bold; color: var(--navy); }
+
+        .tag { display: inline-block; padding: 5px 15px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        .tag-basic { background: var(--primary); color: #fff; }
+
+        .tag-optional { background: var(--optional-border); color: #8C6F00; }
+
+        .tag-lab { background: var(--danger); color: #8C0000; }
+
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.03); }
+
+        .label { font-weight: bold; color: #777; font-size: 0.9em; }
+
+        .important { color: #D32F2F; font-weight: bold; margin: 5px 0; font-size: 0.85em; background: rgba(255,255,255,0.7); padding: 5px 12px; border-radius: 10px; display: inline-block; }
+
+        .price-tag { color: var(--success); font-weight: bold; font-size: 1.1em; margin-top: 5px; display: block; }
+
+        .route-tag { background: rgba(0,0,0,0.05); color: #333; padding: 3px 10px; border-radius: 5px; font-size: 0.85em; font-weight: bold; margin-left: 10px; }
+
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; margin-top: 20px; }
+
+        .summary-item { background: var(--bg-card); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); }
+
+        .summary-title { font-weight: bold; color: var(--navy); font-size: 1.15em; margin-bottom: 10px; display: block; }
+
+        .footer { margin-top: 40px; font-size: 13px; color: #BBB; text-align: center; padding-top: 20px; border-top: 2px dashed #EEE; }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>VACCINE GUIDE</h1>
+
+        <p>ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่</p>
+
+        <div class="contact">☏ เบอร์โทรติดต่อ : 35757 / 36658</div>
+
+    </div>
+
+    <div class="guide-container">
+
+        <div class="guide-box">
+
+            <h4>📋 เตรียมตัวก่อนฉีด</h4>
+
+            <ul>
+
+                <li>สมุดวัคซีนมาด้วยทุกครั้ง</li>
+
+                <li>สวมเสื้อผ้าหลวมๆ สบายๆ</li>
+
+                <li>แจ้งประวัติแพ้ยา/อาหารกับแพทย์หรือพยาบาล</li>
+
+            </ul>
+
+        </div>
+
+        <div class="guide-box" style="background: rgba(255, 249, 240, 0.75); border-color: #FFE0B2;">
+
+            <h4 style="color: #FFB74D;">⚠️ ต้องเลื่อนนัดเมื่อไหร่?</h4>
+
+            <ul style="font-size: 0.9em;">
+
+                <li><strong>มีไข้ (> 38.0°C):</strong> ต้องเลื่อนนัดเพื่อความแน่ใจและไม่สับสนผลข้างเคียงของวัคซีน</li>
+
+                <li>ป่วยเฉียบพลันที่มีอาการรุนแรง</li>
+
+                <li>ได้รับยากดภูมิคุ้มกัน</li>
+
+                <li style="color: #4CAF50;">*น้ำมูกไหลเล็กน้อย ไม่มีไข้ ฉีดได้*</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="selector-group">
+
+        <select id="ageSelect" onchange="filterVaccine()">
+
+            <option value="">-- เลือกอายุของน้องที่นี่ --</option>
+
+            <option value="0">แรกเกิด</option>
+
+            <option value="1">1 เดือน</option>
+
+            <option value="2">2 เดือน</option>
+
+            <option value="4">4 เดือน</option>
+
+            <option value="6">6 เดือน</option>
+
+            <option value="9">9 เดือน</option>
+
+            <option value="12">1 ปี</option>
+
+            <option value="15">1 ปี 3 เดือน</option>
+
+            <option value="18">1 ปี 6 เดือน</option>
+
+            <option value="24">2 ปี</option>
+
+            <option value="48">4 ปี</option>
+
+            <option value="summary">⭐ สรุปวัคซีนเสริม</option>
+
+        </select>
+
+    </div>
+
+    <div id="vaccineList"></div>
+
+    <div id="emergencySection" style="display:none;">
+
+        <div class="emergency-box">
+
+            <h4 style="margin:0 0 10px 0; color:var(--success);">🚑 อาการที่ควรกลับมาพบแพทย์ทันทีหลังฉีดวัคซีน</h4>
+
+            <ul style="font-size:0.95em; color: #555;">
+
+                <li>มีผื่นลมพิษขึ้นตามตัว หน้าบวม ปากบวม หรือหายใจลำบาก</li>
+
+                <li>ไข้สูงมากและรับประทานยาแล้วไข้ไม่ลด</li>
+
+                <li>เด็กซึมลง ไม่ยอมทานนมหรืออาหาร</li>
+
+                <li>ชัก หรือ ร้องกวนโยเยผิดปกติเป็นเวลานาน</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        อ้างอิง: สมาคมโรคติดเชื้อเด็กแห่งประเทศไทย (PIDST) 2569 | ข้อมูลราคาและชนิดวัคซีนอาจมีการเปลี่ยนแปลง
+
+    </div>
+
+</div>
+
+<script>
+
+const vaccineData = {
+
+    "0": [
+
+        { type: "basic", name: "BCG (วัคซีนป้องกันวัณโรค)", route: "ID", sideEffect: "ตุ่มหนองบริเวณที่ฉีด", care: "ทำความสะอาดน้ำต้มสุก ห้ามบ่ง" },
+
+        { type: "basic", name: "HBV 1 (วัคซีนป้องกันตับอักเสบบี เข็มที่ 1)", route: "IM", sideEffect: "ไข้ต่ำ ปวดบวม", care: "เช็ดตัวลดไข้" }
+
+    ],
+
+    "1": [
+
+        { type: "basic", name: "HBV 2 (วัคซีนป้องกันตับอักเสบบี กรณีแม่เป็นพาหะ)", route: "IM", sideEffect: "ปวดบวมแดง", care: "ประคบเย็น" }
+
+    ],
+
+    "2": [
+
+        { type: "basic", name: "DTwP-HB-Hib 1 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", detail: "วัคซีนพื้นฐาน", sideEffect: "ไข้สูง ร้องกวน", care: "ยาลดไข้/เช็ดตัว" },
+
+        { type: "basic", name: "IPV 1 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", route: "IM", sideEffect: "บวมแดง", care: "ประคบเย็น" },
+
+        { type: "basic", name: "Rota 1 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", route: "Oral", sideEffect: "แหวะนม/ถ่ายเหลว", care: "งดนมก่อน-หลัง 30 นาที" },
+
+        { type: "optional", name: "Infanrix-Hexa (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ และโปลิโอ) เข็มที่ 1", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: "1,568 บาท", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+
+        { type: "optional", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 1", route: "IM", detail: "Prevnar 13 (2,131.-) / Prevnar 20 (2,533.-) / Weuphoria PFS (1,469.-)", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" }
+
+    ],
+
+    "4": [
+
+        { type: "basic", name: "DTwP-HB-Hib 2 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", sideEffect: "ไข้สูง", care: "เช็ดตัว" },
+
+        { type: "basic", name: "IPV 2 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", route: "IM", sideEffect: "บวมแดง", care: "ประคบเย็น" },
+
+        { type: "basic", name: "Rota 2 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", route: "Oral", sideEffect: "แหวะนม/ถ่ายเหลว", care: "งดนมก่อน-หลัง 30 นาที" },
+
+        { type: "optional", name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: "1,297 บาท", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+
+        { type: "optional", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 2", route: "IM", detail: "Prevnar 13 (2,131.-) / Prevnar 20 (2,533.-) / Weuphoria PFS (1,469.-)", sideEffect: "ไข้ต่ำ", care: "ประคบเย็น" }
+
+    ],
+
+    "6": [
+
+        { type: "basic", name: "DTwP-HB-Hib 3 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", sideEffect: "ไข้", care: "เช็ดตัว" },
+
+        { type: "basic", name: "OPV 3 (วัคซีนป้องกันโปลิโอ ชนิดหยอด)", route: "Oral", sideEffect: "ปกติ", care: "สังเกตอาการ" },
+
+        { type: "basic", name: "Rota 3 (กรณีหยอด 3 ครั้ง)", route: "Oral", sideEffect: "แหวะนม/ถ่ายเหลว", care: "งดนมก่อน-หลัง 30 นาที" },
+
+        { type: "optional", name: "Infanrix-Hexa (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ และโปลิโอ) เข็มที่ 2", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: "1,568 บาท", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+
+        { type: "optional", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 3", route: "IM", detail: "Prevnar 13 (2,131.-) / Prevnar 20 (2,533.-) / Weuphoria PFS (1,469.-)", sideEffect: "ไข้ต่ำ", care: "ประคบเย็น" },
+
+        { type: "optional", name: "EntroVac (วัคซีนป้องกันโรคมือเท้าปาก) เข็มที่ 1", route: "IM", detail: "เริ่ม 6 เดือน - 5 ปี | ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: "2,701 บาท", sideEffect: "ปวดบวม", care: "สังเกตอาการ" },
+
+        { type: "optional", name: "Influenza (วัคซีนป้องกันไข้หวัดใหญ่)", route: "IM", detail: "เริ่มฉีดที่ 6 เดือน | ถ้าอายุ < 9 ปี ฉีดครั้งแรก 2 เข็ม ห่างกันอย่างน้อย 1 เดือน", price: "306 บาท", sideEffect: "ไข้ต่ำ", care: "พักผ่อน" }
+
+    ],
+
+    "9": [
+
+        { type: "screening", name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจาง)", detail: "กรุณาเจาะเลือดก่อนพบแพทย์" },
+
+        { type: "basic", name: "Live JE 1 (วัคซีนป้องกันไข้สมองอักเสบเจอี)", route: "SC", sideEffect: "ไข้", care: "เช็ดตัว" }
+
+    ],
+
+    "12": [
+
+        { type: "basic", name: "MMR 1 (วัคซีนป้องกันโรคหัด คางทูม หัดเยอรมัน)", route: "SC", sideEffect: "ไข้/ผื่นแดง", care: "เช็ดตัว" },
+
+        { type: "optional", name: "Varivax (วัคซีนป้องกันโรคอีสุกอีใส) เข็มที่ 1", route: "SC", detail: "เริ่มฉีดที่ 1 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "983 บาท", sideEffect: "ไข้ต่ำ", care: "สังเกตอาการ" }
+
+    ],
+
+    "15": [
+
+        { type: "optional", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มกระตุ้น", route: "IM", detail: "ฉีดช่วงอายุ 1 ปี 3 เดือน | Prevnar 13 (2,131.-) / Prevnar 20 (2,533.-) / Weuphoria PFS (1,469.-)", sideEffect: "ปวดบวม", care: "ประคบเย็น" }
+
+    ],
+
+    "18": [
+
+        { type: "basic", name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 1", route: "IM", sideEffect: "ไข้สูง", care: "ประคบเย็น" },
+
+        { type: "basic", name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด) กระตุ้นครั้งที่ 1", route: "Oral", sideEffect: "ปกติ", care: "ปกติ" },
+
+        { type: "basic", name: "MMR 2 (วัคซีนป้องกันโรคหัด คางทูม และหัดเยอรมัน) เข็มที่ 2", route: "SC", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+
+        { type: "optional", name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: "1,297 บาท", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" }
+
+    ],
+
+    "24": [
+
+        { type: "basic", name: "MMR 2 (วัคซีนป้องกันโรคหัด คางทูม และหัดเยอรมัน) เข็มที่ 2", route: "SC", sideEffect: "ไข้ต่ำ/ผื่นแดง", care: "เช็ดตัว" }
+
+    ],
+
+    "48": [
+
+        { type: "screening", name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจาง)", detail: "กรุณาเจาะเลือดก่อนพบแพทย์" },
+
+        { type: "basic", name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 2", route: "IM", sideEffect: "ไข้สูง", care: "ยาลดไข้" },
+
+        { type: "basic", name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด)กระตุ้นครั้งที่ 2", route: "Oral", sideEffect: "ปกติ", care: "ปกติ" },
+
+        { type: "optional", name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: "1,297 บาท", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+
+        { type: "optional", name: "QdengaPFS (วัคซีนป้องกันโรคไข้เลือดออก) เข็มที่ 1", route: "SC", detail: "เริ่มฉีดที่ 4 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "1,639 บาท", sideEffect: "ปวดเมื่อย", care: "เช็ดตัว" }
+
+    ]
+
+};
+
+const optionalSummary = [
+
+    { name: "Infanrix-Hexa", thai: "วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ โปลิโอ", route: "IM", note: "ใช้ทดแทนวัคซีนพื้นฐาน", info: "อายุ 2, 6 เดือน", price: "1,568 บาท" },
+
+    { name: "Infanrix-IPV-HIB", thai: "วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ ฮิบ", route: "IM", note: "ใช้ทดแทนวัคซีนพื้นฐาน", info: "อายุ 4 เดือน, 18 เดือน, 4 ปี", price: "1,297 บาท" },
+
+    { name: "IPD (Prevnar 13/20/Weuphoria)", thai: "วัคซีนป้องกันเชื้อนิวโมคอคคัส", route: "IM", info: "ฉีดอายุ 2, 4, 6 และ 15 เดือน", price: "1,469 - 2,533 บาท" },
+
+    { name: "Varivax", thai: "วัคซีนป้องกันโรคอีสุกอีใส", route: "SC", info: "เริ่ม 1 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "983 บาท" },
+
+    { name: "EntroVac", thai: "วัคซีนป้องกันโรคมือเท้าปาก (EV71)", route: "IM", info: "เริ่ม 6 เดือน - 5 ปี | ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: "2,701 บาท" },
+
+    { name: "Influenza", thai: "วัคซีนป้องกันโรคไข้หวัดใหญ่", route: "IM", info: "เริ่ม 6 เดือน ถ้าอายุ < 9 ปี ฉีดครั้งแรก 2 เข็ม ห่างกันอย่างน้อย 1 เดือน| ฉีดรายปี", price: "306 บาท" },
+
+    { name: "QdengaPFS", thai: "วัคซีนป้องกันโรคไข้เลือดออก", route: "SC", info: "เริ่ม 4 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "1,639 บาท" }
+
+];
+
+function filterVaccine() {
+
+    const age = document.getElementById("ageSelect").value;
+
+    const listDiv = document.getElementById("vaccineList");
+
+    const emergencyDiv = document.getElementById("emergencySection");
+
+    listDiv.innerHTML = "";
+
+    if (age === "") { emergencyDiv.style.display = "none"; return; }
+
+    if (age === "summary") {
+
+        emergencyDiv.style.display = "none";
+
+        let summaryHTML = `<h3 style="color:var(--navy); text-align:center;">⭐ สรุปวัคซีนเสริม</h3><div class="summary-grid">`;
+
+        optionalSummary.forEach(s => {
+
+            summaryHTML += `<div class="summary-item"><span class="summary-title">${s.name} (${s.thai}) <span class="route-tag">${s.route}</span></span><div class="important">${s.note || 'วัคซีนเสริม'}</div><div style="font-size:0.85em; color:#444; margin-top:5px; border-top:1px dashed #eee; padding-top:5px;">📅 ตารางฉีด: ${s.info}</div><div class="price-tag">ราคา: ${s.price}</div></div>`;
+
+        });
+
+        summaryHTML += `</div>`;
+
+        listDiv.innerHTML = summaryHTML;
+
+    } else {
+
+        emergencyDiv.style.display = "block";
+
+        if (vaccineData[age]) {
+
+            vaccineData[age].forEach(v => {
+
+                const card = document.createElement("div");
+
+                card.className = v.type === 'optional' ? 'vaccine-card optional-card' : (v.type === 'screening' ? 'vaccine-card screening' : 'vaccine-card');
+
+                let tag = v.type === 'optional' ? 'tag-optional' : (v.type === 'screening' ? 'tag-lab' : 'tag-basic');
+
+                let tagText = v.type === 'optional' ? 'วัคซีนเสริม' : (v.type === 'screening' ? 'คัดกรอง' : 'พื้นฐาน');
+
+                card.innerHTML = `
+
+                    <span class="tag ${tag}">${tagText}</span>
+
+                    <div class="vaccine-name">${v.name} ${v.route ? `<span class="route-tag">${v.route}</span>` : ''}</div>
+
+                    ${v.detail ? `<div class="important">${v.detail}</div>` : ''}
+
+                    ${v.price ? `<span class="price-tag">💰 ${v.price}</span>` : ''}
+
+                    ${v.type !== 'screening' ? `
+
+                        <div class="grid-info">
+
+                            <div><span class="label">⚠️ ผลข้างเคียง:</span> <small>${v.sideEffect}</small></div>
+
+                            <div><span class="label">🏠 การดูแล:</span> <small>${v.care}</small></div>
+
+                        </div>
+
+                    ` : ''}
+
+                `;
+
+                listDiv.appendChild(card);
+
+            });
+
+        }
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
+
