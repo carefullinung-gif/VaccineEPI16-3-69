@@ -3,2760 +3,634 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediatric Vaccine Smart Console - OPD 27 รพ.มหาราชนครเชียงใหม่</title>
-    <!-- Google Fonts: Sarabun -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Clean Medical Design System -->
+    <title>Vaccine Guide - OPD 27 Maharaj Nakorn Chiang Mai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-/**
- * Vaccine Guide - Clinical Smart Console Design System (v2)
- * Clean Medical / Apple Health Aesthetic
- * หน่วยงาน: ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่
- */
+        :root {
+            --navy: #001F5B;
+            --primary: #8ECAE6; 
+            --secondary: #FFB7C5; 
+            --accent: #A5A6F6; 
+            --success: #6ACC87; 
+            --danger: #FFADAD;
+            --optional-border: #FFD60A; 
+            --bg-body: radial-gradient(circle at 10% 20%, rgb(239, 246, 255) 0%, rgb(219, 234, 254) 90%);
+            --bg-container: rgba(255, 255, 255, 0.90);
+            --bg-card: rgba(255, 255, 255, 0.70);
+            --bg-optional-card: rgba(255, 253, 240, 0.85);
+            --dark: #4A4A4A;
+        }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background: var(--bg-body);
+            padding: 15px; margin: 0; padding-bottom: 120px; line-height: 1.6; color: var(--dark);
+        }
+        .container { 
+            max-width: 1000px; margin: auto; background: var(--bg-container); 
+            padding: 30px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
+            backdrop-filter: blur(15px); border: 2px solid #ffffff;
+        }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { color: var(--navy); margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
+        .header p { margin: 5px 0; font-weight: bold; color: #6C7A92; font-size: 0.9em; } 
+        .contact { color: #888; font-size: 0.8em; background: rgba(255, 255, 255, 0.8); display: inline-block; padding: 5px 20px; border-radius: 20px; margin-top: 5px; border: 1px solid #eee; }
 
-:root {
-    --primary: #0284C7;
-    --primary-dark: #0369A1;
-    --primary-light: #E0F2FE;
-    --accent: #10B981;
-    --accent-dark: #059669;
-    --accent-light: #ECFDF5;
-    --gold: #D97706;
-    --gold-light: #FEF3C7;
-    --danger: #EF4444;
-    --danger-light: #FEE2E2;
-    --navy: #0F172A;
-    --slate-dark: #1E293B;
-    --slate-med: #475569;
-    --slate-light: #94A3B8;
-    --bg-base: #F8FAFC;
-    --bg-card: #FFFFFF;
-    --border-color: #E2E8F0;
-    --border-focus: #38BDF8;
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 18px;
-    --radius-full: 9999px;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-    --shadow-hover: 0 12px 24px -4px rgba(2, 132, 199, 0.15);
-}
+        .guide-container { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; }
+        .guide-box { flex: 1 1 300px; background: var(--bg-card); border-radius: 20px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); }
+        .guide-box h4 { margin-top: 0; color: #5A9BD5; border-bottom: 2px dashed #D6EAF8; padding-bottom: 5px; }
+        .guide-box ul { padding-left: 20px; margin-bottom: 0; font-size: 0.95em; }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+        .emergency-box { background: rgba(240, 255, 244, 0.75); border: 2px solid var(--success); border-radius: 20px; padding: 18px; margin-top: 20px; backdrop-filter: blur(5px); }
 
-body {
-    font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg-base);
-    color: var(--navy);
-    line-height: 1.5;
-    padding-bottom: 120px; /* space for sticky floating drawer */
-    -webkit-font-smoothing: antialiased;
-}
+        .selector-group { margin: 30px 0; text-align: center; }
+        select { 
+            padding: 15px; border-radius: 20px; border: 2px solid var(--primary); 
+            width: 100%; max-width: 500px; font-size: 18px; outline: none;
+            background: rgba(255, 255, 255, 0.8); color: var(--navy); font-weight: bold; cursor: pointer;
+        }
 
-/* Container */
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 16px;
-}
+        .vaccine-card { position: relative; background: var(--bg-card); margin: 15px 0; padding: 22px; border-radius: 25px; border-left: 8px solid var(--primary); backdrop-filter: blur(5px); transition: all 0.3s; }
+        .optional-card { background-color: var(--bg-optional-card) !important; border-left-color: var(--optional-border); border: 1px solid rgba(255, 214, 10, 0.3); }
+        .screening { border-left-color: #e74c3c; background: rgba(255, 240, 240, 0.75); }
+        
+        .vaccine-card.removed-card { opacity: 0.4; background: #ffebee !important; border-left-color: #c62828 !important; text-decoration: line-through; }
+        
+        .vaccine-name { font-size: 0.9em; font-weight: bold; color: var(--navy); }
+        
+        .card-action-zone { float: right; margin-top: 5px; text-align: right; }
+        .card-action-zone input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; vertical-align: middle; }
+        .ipd-select-container { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.05); text-align: left; clear: both; }
+        .ipd-variant-select { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--optional-border); background: #fff; font-size: 0.85em; outline: none; font-family: 'Sarabun', sans-serif; font-weight: bold; color: var(--navy); cursor: pointer; max-width: 100%; }
+        .ipd-variant-select:disabled { background: #f3f4f6; border-color: #d1d5db; cursor: not-allowed; opacity: 0.7; }
 
-/* Header & Hospital Branding */
-.clinic-header {
-    background: linear-gradient(135deg, #0A192F 0%, #1E3A8A 100%);
-    color: #FFFFFF;
-    border-radius: var(--radius-lg);
-    padding: 24px 28px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-md);
-    position: relative;
-    overflow: hidden;
-}
-.clinic-header::after {
-    content: "🏥";
-    position: absolute;
-    right: 20px;
-    bottom: -15px;
-    font-size: 110px;
-    opacity: 0.08;
-    pointer-events: none;
-}
-.clinic-header-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    color: #38BDF8;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
-}
-.clinic-header h1 {
-    font-size: 1.65em;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.clinic-sub {
-    font-size: 0.95em;
-    color: #CBD5E1;
-    margin-bottom: 12px;
-}
-.clinic-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    font-size: 0.85em;
-    color: #94A3B8;
-}
-.clinic-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.clinic-meta-item strong {
-    color: #F1F5F9;
-}
+        .tag { display: inline-block; padding: 5px 15px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .tag-basic { background: var(--primary); color: #fff; }
+        .tag-optional { background: var(--optional-border); color: #8C6F00; }
+        .tag-lab { background: var(--danger); color: #8C0000; }
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.03); clear: both; }
+        .label { font-weight: bold; color: #777; font-size: 0.85em; }
+        .important { color: #D32F2F; font-weight: bold; margin: 5px 0; font-size: 0.8em; background: rgba(255,255,255,0.7); padding: 5px 12px; border-radius: 10px; display: inline-block; }
+        .price-tag { color: var(--success); font-weight: bold; font-size: 1em; margin-top: 5px; display: block; }
+        .route-tag { background: rgba(0,0,0,0.05); color: #333; padding: 3px 10px; border-radius: 5px; font-size: 0.8em; font-weight: bold; margin-left: 10px; }
 
-/* Patient DOB & Age Engine Card */
-.patient-console-card {
-    background: var(--bg-card);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    padding: 18px 22px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-sm);
-}
-.patient-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed var(--border-color);
-}
-.patient-dob-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.patient-dob-group label {
-    font-weight: 600;
-    font-size: 0.95em;
-    color: var(--slate-dark);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.patient-dob-input {
-    font-family: 'Sarabun', sans-serif;
-    font-size: 14px;
-    padding: 8px 14px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
-    background: #F8FAFC;
-    color: var(--navy);
-    outline: none;
-    transition: all 0.2s;
-}
-.patient-dob-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-    background: #FFFFFF;
-}
-.patient-calc-result {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    font-size: 0.88em;
-    font-weight: 600;
-}
-.patient-next-visit {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #FEF3C7;
-    color: #92400E;
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    font-size: 0.88em;
-    font-weight: 600;
-}
+        .floating-summary-bar {
+            position: fixed; bottom: 15px; left: 15px; right: 15px;
+            background: rgba(14, 165, 233, 0.45); color: var(--navy);
+            padding: 12px 24px; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(0, 31, 91, 0.15);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: none; justify-content: center; align-items: center;
+            flex-wrap: wrap; gap: 20px; max-width: 970px; margin: auto;
+            text-align: center;
+        }
+        .summary-stats { display: flex; gap: 15px; font-size: 0.85em; flex-wrap: wrap; justify-content: center; }
+        .stat-item { background: rgba(199, 214, 250, 0.72); padding: 6px 16px; border-radius: 12px; font-weight: bold; border: 1px solid rgba(255,255,255,0.6); color: var(--navy); }
+        .stat-item span { font-weight: bold; font-size: 1.15em; }
+        .stat-item span.inject { color: #0284C7; }
+        .stat-item span.oral { color: #EA580C; }
+        .stat-item span.lab { color: #DC2626; }
+        .summary-cost { font-size: 1.1em; font-weight: bold; background: rgba(255, 255, 255, 0.9); padding: 6px 18px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.9); color: var(--navy); }
+        .summary-cost span { color: #16A34A; font-size: 1.25em; }
 
-/* Age Milestone Chips Bar */
-.milestones-title {
-    font-size: 0.88em;
-    font-weight: 700;
-    color: var(--slate-med);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.milestones-scroll {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
-}
-.milestones-scroll::-webkit-scrollbar {
-    height: 4px;
-}
-.milestones-scroll::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
-    border-radius: 4px;
-}
-.milestone-chip {
-    flex-shrink: 0;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 7px 15px;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border-color);
-    background: #F8FAFC;
-    color: var(--slate-med);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.milestone-chip:hover {
-    background: #F1F5F9;
-    color: var(--navy);
-    border-color: #CBD5E1;
-}
-.milestone-chip.active {
-    background: var(--primary);
-    color: #FFFFFF;
-    border-color: var(--primary);
-    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
-}
-
-/* 1-Click Smart Clinical Presets Switcher */
-.preset-section {
-    margin-bottom: 20px;
-}
-.preset-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-.preset-title {
-    font-size: 0.95em;
-    font-weight: 700;
-    color: var(--slate-dark);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.preset-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-}
-.preset-card {
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 14px 18px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
-.preset-card:hover {
-    border-color: #94A3B8;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-.preset-card.active {
-    border-color: var(--primary);
-    background: #F0F9FF;
-    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.18);
-}
-.preset-card.active-comfort {
-    border-color: var(--accent);
-    background: #F0FDF4;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.18);
-}
-.preset-card.active-total {
-    border-color: #F59E0B;
-    background: #FFFBEB;
-    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.18);
-}
-.preset-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-.preset-badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-}
-.badge-basic { background: #E2E8F0; color: #334155; }
-.badge-comfort { background: #D1FAE5; color: #065F46; }
-.badge-total { background: #FEF3C7; color: #92400E; }
-
-.preset-card h3 {
-    font-size: 1.05em;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 4px;
-}
-.preset-desc {
-    font-size: 0.83em;
-    color: var(--slate-med);
-    margin-bottom: 8px;
-}
-.preset-check-indicator {
-    font-size: 0.82em;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--slate-light);
-}
-.preset-card.active .preset-check-indicator {
-    color: var(--primary);
-}
-.preset-card.active-comfort .preset-check-indicator {
-    color: var(--accent-dark);
-}
-.preset-card.active-total .preset-check-indicator {
-    color: #B45309;
-}
-
-/* Visual Injection & Needle Reduction Tracker */
-.tracker-card {
-    background: #FFFFFF;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-sm);
-}
-.tracker-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-.tracker-title {
-    font-size: 0.92em;
-    font-weight: 700;
-    color: var(--slate-dark);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.needle-savings-pill {
-    background: #ECFDF5;
-    border: 1px solid #A7F3D0;
-    color: #047857;
-    font-size: 0.85em;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: var(--radius-full);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-.needle-savings-pill.highlight-anim {
-    animation: pulseBadge 1.5s infinite;
-}
-@keyframes pulseBadge {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.04); }
-}
-
-.body-sites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
-}
-.site-box {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-.site-icon {
-    font-size: 22px;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-.site-content {
-    flex: 1;
-}
-.site-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--slate-light);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-}
-.site-items {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.35;
-}
-.site-empty {
-    color: #94A3B8;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 12px;
-}
-
-/* 2-Column Comparison Matrix Workspace */
-.matrix-workspace {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-bottom: 25px;
-}
-@media (max-width: 880px) {
-    .matrix-workspace {
-        grid-template-columns: 1fr;
-    }
-}
-
-.matrix-col {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.col-header-card {
-    padding: 14px 18px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow-sm);
-}
-.col-header-basic {
-    background: #F1F5F9;
-    border: 1px solid #CBD5E1;
-    color: #1E293B;
-}
-.col-header-optional {
-    background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-    color: #FFFFFF;
-    border: 1px solid #0284C7;
-}
-.col-header-title {
-    font-size: 1em;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.col-header-badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: var(--radius-full);
-}
-.badge-white { background: rgba(255, 255, 255, 0.2); color: #FFFFFF; }
-.badge-dark { background: #E2E8F0; color: #334155; }
-
-/* Vaccine Cards */
-.v-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 16px 18px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-}
-.v-card:hover {
-    box-shadow: var(--shadow-md);
-    border-color: #CBD5E1;
-}
-
-/* Selected Active State */
-.v-card.selected-active {
-    background: #F0FDF4;
-    border: 2px solid var(--accent);
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.15);
-}
-
-/* Replaced / Cross-out State */
-.v-card.replaced-card {
-    background: #FFF1F2;
-    border: 1px dashed #FECDD3;
-    opacity: 0.65;
-}
-.v-card.replaced-card .v-card-title {
-    text-decoration: line-through;
-    color: #9F1239;
-}
-.replaced-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: #F43F5E;
-    color: #FFFFFF;
-    font-size: 10.5px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-}
-
-/* Card Header */
-.v-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-.v-card-title {
-    font-size: 1.02em;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.35;
-}
-.v-card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 8px;
-}
-.v-tag {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 6px;
-}
-.tag-route { background: #F1F5F9; color: #475569; }
-.tag-disease { background: #EFF6FF; color: #1E40AF; }
-.tag-price { background: #ECFDF5; color: #065F46; font-weight: 700; font-size: 12px; }
-
-/* Custom Checkbox */
-.custom-checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--slate-dark);
-}
-.v-checkbox {
-    width: 20px;
-    height: 20px;
-    border-radius: 6px;
-    accent-color: var(--accent);
-    cursor: pointer;
-}
-
-/* IPD Selector Dropdown */
-.ipd-selector-wrapper {
-    margin-top: 10px;
-    background: #F8FAFC;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-}
-.ipd-select-input {
-    width: 100%;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13.5px;
-    font-weight: 600;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1.5px solid var(--primary);
-    background: #FFFFFF;
-    color: var(--navy);
-    outline: none;
-    cursor: pointer;
-}
-.ipd-warning-alert {
-    color: #DC2626;
-    font-size: 11.5px;
-    font-weight: 600;
-    margin-top: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* Card Details & Care Tips */
-.v-card-desc {
-    font-size: 0.85em;
-    color: var(--slate-med);
-    margin-bottom: 8px;
-}
-.v-card-care-box {
-    background: #F8FAFC;
-    border-left: 3px solid #38BDF8;
-    padding: 8px 12px;
-    border-radius: 0 6px 6px 0;
-    font-size: 0.82em;
-    color: #334155;
-    margin-top: 8px;
-}
-.care-label {
-    font-weight: 700;
-    color: #0369A1;
-    margin-bottom: 2px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* Collapsible Care Guidelines */
-.guideline-accordion {
-    background: #FFFFFF;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    margin-bottom: 25px;
-    overflow: hidden;
-}
-.guideline-header {
-    padding: 14px 20px;
-    background: #F8FAFC;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 700;
-    font-size: 0.95em;
-    color: var(--slate-dark);
-    user-select: none;
-    transition: background 0.2s;
-}
-.guideline-header:hover {
-    background: #F1F5F9;
-}
-.guideline-content {
-    display: none;
-    padding: 16px 20px;
-    border-top: 1px solid var(--border-color);
-}
-.guideline-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
-}
-.guideline-box {
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
-    font-size: 0.86em;
-}
-.guideline-box h4 {
-    margin-bottom: 6px;
-    font-weight: 700;
-}
-.guideline-box ul {
-    padding-left: 18px;
-}
-.guideline-box li {
-    margin-bottom: 4px;
-}
-
-/* Floating Smart Drawer (Bottom Sticky Summary) */
-.floating-smart-bar {
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    max-width: 1168px;
-    background: rgba(15, 23, 42, 0.92);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.45);
-    border-radius: var(--radius-lg);
-    padding: 14px 22px;
-    color: #FFFFFF;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    z-index: 999;
-}
-.summary-metrics {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.metric-col {
-    display: flex;
-    flex-direction: column;
-}
-.metric-sub {
-    font-size: 11px;
-    color: #94A3B8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.metric-val {
-    font-size: 1.35em;
-    font-weight: 700;
-    color: #F8FAFC;
-    line-height: 1.2;
-}
-.metric-val.val-price {
-    color: #38BDF8;
-}
-.metric-val.val-accent {
-    color: #34D399;
-}
-
-.summary-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-.btn-smart {
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: var(--radius-md);
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-}
-.btn-smart-line {
-    background: #06C755;
-    color: #FFFFFF;
-}
-.btn-smart-line:hover {
-    background: #05B34C;
-    transform: translateY(-1px);
-}
-.btn-smart-print {
-    background: #0284C7;
-    color: #FFFFFF;
-}
-.btn-smart-print:hover {
-    background: #0369A1;
-    transform: translateY(-1px);
-}
-.btn-smart-search {
-    background: #334155;
-    color: #E2E8F0;
-    border: 1px solid #475569;
-}
-.btn-smart-search:hover {
-    background: #475569;
-    color: #FFFFFF;
-}
-
-/* Quick Search Modal */
-.modal-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(6px);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-}
-.modal-dialog {
-    background: #FFFFFF;
-    width: 100%;
-    max-width: 680px;
-    max-height: 85vh;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-.modal-header {
-    padding: 18px 24px;
-    background: #F8FAFC;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.modal-header h3 {
-    font-size: 1.15em;
-    font-weight: 700;
-    color: var(--navy);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.modal-close-btn {
-    background: transparent;
-    border: none;
-    font-size: 20px;
-    color: var(--slate-med);
-    cursor: pointer;
-    line-height: 1;
-}
-.modal-body {
-    padding: 20px 24px;
-    overflow-y: auto;
-}
-.modal-search-input {
-    width: 100%;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 14.5px;
-    padding: 10px 16px;
-    border-radius: var(--radius-sm);
-    border: 1.5px solid var(--primary);
-    outline: none;
-    margin-bottom: 16px;
-}
-.search-results-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.search-item-card {
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    background: #F8FAFC;
-}
-.search-item-title {
-    font-size: 1em;
-    font-weight: 700;
-    color: var(--navy);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
-}
-.search-item-desc {
-    font-size: 0.85em;
-    color: var(--slate-med);
-}
-
-/* Toast Notifications */
-.toast-notice {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    background: #10B981;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    font-size: 13.5px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 2000;
-    transform: translateY(-50px);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-}
-.toast-notice.show {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-/* Print Only Section & Print Styles */
-.print-only {
-    display: none;
-}
-
-@media print {
-    body {
-        background: #FFFFFF;
-        color: #000000;
-        padding-bottom: 0;
-        font-size: 12pt;
-    }
-    .clinic-header,
-    .milestones-scroll,
-    .milestones-title,
-    .preset-section,
-    .guideline-accordion,
-    .floating-smart-bar,
-    .modal-backdrop,
-    .toast-notice,
-    .patient-dob-group {
-        display: none !important;
-    }
-    .app-container {
-        max-width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-    .print-only {
-        display: block !important;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #000;
-    }
-    .print-only h2 {
-        font-size: 16pt;
-        margin-bottom: 2px;
-    }
-    .print-only h3 {
-        font-size: 13pt;
-        color: #333;
-        margin-bottom: 6px;
-    }
-    .print-only p {
-        font-size: 10pt;
-        color: #555;
-    }
-    .patient-console-card {
-        border: none;
-        padding: 0;
-        margin-bottom: 15px;
-        box-shadow: none;
-    }
-    .patient-row {
-        border: none;
-        padding: 0;
-        margin-bottom: 10px;
-    }
-    .tracker-card {
-        border: 1px solid #999;
-        box-shadow: none;
-        page-break-inside: avoid;
-    }
-    .matrix-workspace {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 15px !important;
-        page-break-inside: avoid;
-    }
-    .v-card {
-        border: 1px solid #CCC !important;
-        box-shadow: none !important;
-        background: #FFF !important;
-        page-break-inside: avoid;
-        margin-bottom: 8px;
-    }
-    .v-card.selected-active {
-        border: 2px solid #000 !important;
-        background: #F9F9F9 !important;
-    }
-    .v-card.replaced-card {
-        opacity: 0.5;
-        border: 1px dashed #999 !important;
-    }
-    .custom-checkbox-label input {
-        display: none;
-    }
-    .ipd-select-input {
-        border: 1px solid #333;
-    }
-}
-
-</style>
+        /* Summary Page Enhanced Styling */
+        .summary-header-wrapper {
+            text-align: center;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #F0F7FF 0%, #E0F2FE 100%);
+            padding: 22px 20px;
+            border-radius: 22px;
+            border: 1px solid #BAE6FD;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.06);
+        }
+        .summary-header-title {
+            color: var(--navy);
+            margin: 0 0 6px 0;
+            font-size: 1.45em;
+            font-weight: 700;
+        }
+        .summary-header-desc {
+            color: #475569;
+            font-size: 0.95em;
+            margin: 0;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .summary-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 22px;
+            border: 1px solid #E2E8F0;
+            border-left: 6px solid #F59E0B;
+            box-shadow: 0 4px 20px rgba(0, 31, 91, 0.07);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 31, 91, 0.12);
+            border-color: #CBD5E1;
+        }
+        .summary-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .summary-badge-pill {
+            background: #FEF3C7;
+            color: #92400E;
+            font-size: 11.5px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid #FDE68A;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .summary-route-badge {
+            background: #E0F2FE;
+            color: #0369A1;
+            font-size: 11.5px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid #BAE6FD;
+        }
+        .summary-brand {
+            font-size: 1.12em;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.35;
+            margin-bottom: 4px;
+        }
+        .summary-thai {
+            font-size: 0.9em;
+            color: #475569;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+        .summary-note-box {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            color: #B45309;
+            font-size: 0.85em;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.4;
+        }
+        .summary-schedule-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            color: #334155;
+            font-size: 0.86em;
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            line-height: 1.45;
+        }
+        .summary-card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 1px dashed #E2E8F0;
+            margin-top: auto;
+        }
+        .summary-price-pill {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #047857;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer { margin-top: 40px; font-size: 13px; color: #BBB; text-align: center; padding-top: 20px; border-top: 2px dashed #EEE; }
+    </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="container">
+    <div class="header">
+        <h1>VACCINE GUIDE</h1>
+        <p>ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่</p>
+        <div class="contact">☏ เบอร์โทรติดต่อ : 35757 / 36658</div>
+    </div>
 
-    <!-- Print Only Header -->
-    <header class="print-only" id="printHeader">
-        <h2>โรงพยาบาลมหาราชนครเชียงใหม่ (ห้องตรวจพิเศษเด็ก 1 OPD 27)</h2>
-        <h3>ใบบันทึกและเปรียบเทียบแผนการรับบริการวัคซีน (Pediatric Vaccine Counseling Sheet)</h3>
-        <p id="printMetaInfo">วันที่พิมพ์: - | ช่วงอายุ: -</p>
-    </header>
-
-    <!-- Clinic Top Branding Banner -->
-    <header class="clinic-header">
-        <div class="clinic-header-badge">
-            <span>✨ VACCINE GUIDE 2.0</span>
-            <span>•</span>
-            <span>SMART CONSOLE</span>
+    <div class="guide-container">
+        <div class="guide-box">
+            <h4>📋 เตรียมตัวก่อนฉีด</h4>
+            <ul>
+                <li>นำสมุดวัคซีนมาด้วยทุกครั้ง</li>
+                <li>สวมใส่เสื้อผ้าหลวมๆ สบายๆ</li>
+                <li>แจ้งประวัติแพ้ยา/อาหารกับแพทย์หรือพยาบาลทุกครั้ง</li>
+            </ul>
         </div>
-        <h1>
-            <span>ระบบให้คำปรึกษาวัคซีนเด็กอัจฉริยะ</span>
-        </h1>
-        <p class="clinic-sub">ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่</p>
-        <div class="clinic-meta-row">
-            <div class="clinic-meta-item">
-                <span>📍 สถานที่:</span>
-                <strong>อาคารสุจิณโณ ชั้น 2</strong>
-            </div>
-            <div class="clinic-meta-item">
-                <span>☏ โทรศัพท์:</span>
-                <strong>35757 / 36658</strong>
-            </div>
-            <div class="clinic-meta-item">
-                <span>🛡️ ความปลอดภัย:</span>
-                <strong>ตรวจสอบข้อมูลตามแนวทางสมาคมโรคติดเชื้อในเด็กแห่งประเทศไทย</strong>
-            </div>
-        </div>
-    </header>
-
-    <!-- Patient Console Card: Birthday Calculator & Milestones -->
-    <section class="patient-console-card">
-        <div class="patient-row">
-            <div class="patient-dob-group">
-                <label for="dobInput">
-                    <span>🎂 ใส่วันเกิดของน้อง:</span>
-                </label>
-                <input type="date" id="dobInput" class="patient-dob-input" onchange="handleDobChange()">
-                <div id="dobCalcResult" class="patient-calc-result" style="display: none;">
-                    <span id="dobAgeText">น้องอายุ: -</span>
-                </div>
-            </div>
-            <div id="nextVisitBadge" class="patient-next-visit" style="display: none;">
-                <span>📅 คาดการณ์นัดถัดไป:</span>
-                <strong id="nextVisitDateText">-</strong>
-            </div>
-        </div>
-
-        <div class="milestones-title">
-            <span>📅 หรือเลือกช่วงอายุตามเกณฑ์นัดรับวัคซีน:</span>
-        </div>
-        <div class="milestones-scroll" id="milestonesBar">
-            <!-- Rendered dynamically by JavaScript -->
-        </div>
-    </section>
-
-    <!-- 1-Click Smart Clinical Presets Switcher -->
-    <section class="preset-section">
-        <div class="preset-header">
-            <div class="preset-title">
-                <span>⚡ แผนสำเร็จรูปแนะนำ (Smart 1-Click Presets):</span>
-            </div>
-            <span style="font-size: 0.82em; color: var(--slate-light);">*สามารถคลิกเลือกหรือปรับเปลี่ยนทีละรายการได้อิสระ</span>
-        </div>
-
-        <div class="preset-grid">
-            <!-- Preset A: Basic Free -->
-            <div class="preset-card active" id="presetBasic" onclick="applyPreset('basic')">
-                <div class="preset-top">
-                    <span class="preset-badge badge-basic">สิทธิ์พื้นฐาน สปสช.</span>
-                    <span style="font-weight: 700; color: #0284C7;">0 บาท</span>
-                </div>
-                <h3>🛡️ แผนพื้นฐานตามสิทธิ์</h3>
-                <p class="preset-desc">รับวัคซีนพื้นฐานตามเกณฑ์มาตรฐาน สปสช. ไม่มีค่าใช้จ่ายเพิ่มเติม</p>
-                <div class="preset-check-indicator">
-                    <span id="presetBasicIcon">✓ กำลังเลือกแผนนี้</span>
-                </div>
-            </div>
-
-            <!-- Preset B: Smart Comfort -->
-            <div class="preset-card" id="presetComfort" onclick="applyPreset('comfort')">
-                <div class="preset-top">
-                    <span class="preset-badge badge-comfort">⭐ ยอดนิยม ลดเจ็บ</span>
-                    <span style="font-weight: 700; color: #059669;">ประหยัดเข็มฉีด</span>
-                </div>
-                <h3>⭐ แผนสมาร์ตคอมฟอร์ต</h3>
-                <p class="preset-desc">รวมวัคซีน 6 โรค (ไอกรนไร้เซลล์ ไข้ต่ำ ลดเจ็บ 1 เข็ม) + เสริม IPD ป้องกันปอดบวม</p>
-                <div class="preset-check-indicator">
-                    <span id="presetComfortIcon">○ แตะเพื่อเลือกแผนนี้</span>
-                </div>
-            </div>
-
-            <!-- Preset C: Total Protection -->
-            <div class="preset-card" id="presetTotal" onclick="applyPreset('total')">
-                <div class="preset-top">
-                    <span class="preset-badge badge-total">👑 ปกป้องครอบคลุม</span>
-                    <span style="font-weight: 700; color: #B45309;">Full Protection</span>
-                </div>
-                <h3>👑 แผนเกราะป้องกันสูงสุด</h3>
-                <p class="preset-desc">วัคซีนรวม + IPD 20 สายพันธุ์ + กาฬหลังแอ่น B (Bexsero) + มือเท้าปาก / ไข้หวัดใหญ่</p>
-                <div class="preset-check-indicator">
-                    <span id="presetTotalIcon">○ แตะเพื่อเลือกแผนนี้</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Visual Injection Site & Needle Saver Tracker -->
-    <section class="tracker-card">
-        <div class="tracker-header">
-            <div class="tracker-title">
-                <span>📍 ตำแหน่งจุดให้วัคซีนในรอบนี้ (Anatomical Injection Sites):</span>
-            </div>
-            <div id="needleSavingsBadge" class="needle-savings-pill">
-                <span>💉 เข็มฉีดปกติ</span>
-            </div>
-        </div>
-
-        <div class="body-sites-grid">
-            <div class="site-box">
-                <div class="site-icon">🦵</div>
-                <div class="site-content">
-                    <div class="site-label">ต้นขาซ้าย (Left Thigh)</div>
-                    <div class="site-items" id="siteLeftThigh">
-                        <span class="site-empty">- ไม่มีรายการ -</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="site-box">
-                <div class="site-icon">🦵</div>
-                <div class="site-content">
-                    <div class="site-label">ต้นขาขวา (Right Thigh)</div>
-                    <div class="site-items" id="siteRightThigh">
-                        <span class="site-empty">- ไม่มีรายการ -</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="site-box">
-                <div class="site-icon">💪</div>
-                <div class="site-content">
-                    <div class="site-label">ต้นแขน (Arm / SC)</div>
-                    <div class="site-items" id="siteArm">
-                        <span class="site-empty">- ไม่มีรายการ -</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="site-box">
-                <div class="site-icon">👄</div>
-                <div class="site-content">
-                    <div class="site-label">หยอดทางปาก (Oral / ห้ามกินนม 30 น.)</div>
-                    <div class="site-items" id="siteOral">
-                        <span class="site-empty">- ไม่มีรายการ -</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2-Column Comparison Matrix Workspace -->
-    <main class="matrix-workspace">
-        
-        <!-- Left Column: Basic Schedule (EPI / Free) -->
-        <section class="matrix-col">
-            <div class="col-header-card col-header-basic">
-                <div class="col-header-title">
-                    <span>🛡️ แผนวัคซีนพื้นฐานตามสิทธิ์</span>
-                </div>
-                <span class="col-header-badge badge-dark">ฟรี สปสช. (0 บาท)</span>
-            </div>
-
-            <div id="basicListContainer" style="display: flex; flex-direction: column; gap: 12px;">
-                <!-- Basic cards rendered by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Right Column: Optional & Upgraded Schedule -->
-        <section class="matrix-col">
-            <div class="col-header-card col-header-optional">
-                <div class="col-header-title">
-                    <span>⭐ แผนวัคซีนรวมทางเลือก & วัคซีนเสริม</span>
-                </div>
-                <span class="col-header-badge badge-white">ลดเจ็บตัว & เสริมภูมิ</span>
-            </div>
-
-            <div id="optionalListContainer" style="display: flex; flex-direction: column; gap: 12px;">
-                <!-- Optional cards rendered by JavaScript -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Collapsible Care & Post-Vaccine Guidelines Accordion -->
-    <section class="guideline-accordion">
-        <div class="guideline-header" onclick="toggleGuidelineAccordion()">
-            <span>📋 คำแนะนำการเตรียมตัวก่อนฉีด และการดูแลเมื่อมีไข้หลังรับวัคซีน</span>
-            <span id="accordionChevron">▼ คลิกดูรายละเอียด</span>
-        </div>
-        <div class="guideline-content" id="guidelineContent">
-            <div class="guideline-grid">
-                <div class="guideline-box" style="background: #EFF6FF; border: 1px solid #BFDBFE;">
-                    <h4 style="color: #1D4ED8;">📋 ก่อนรับวัคซีน</h4>
-                    <ul>
-                        <li>นำสมุดสีชมพู (สมุดบันทึกสุขภาพเด็ก) มาด้วยทุกครั้ง</li>
-                        <li>สวมใส่เสื้อผ้าหลวมๆ สบาย สะดวกต่อการเปิดฉีดต้นขาหรือต้นแขน</li>
-                        <li>แจ้งประวัติการแพ้ยา แพ้อาหาร หรือประวัติชักเมื่อมีไข้แก่แพทย์/พยาบาล</li>
-                    </ul>
-                </div>
-                <div class="guideline-box" style="background: #FEF3C7; border: 1px solid #FDE68A;">
-                    <h4 style="color: #B45309;">⚠️ กรณีที่ควรเลื่อนนัด</h4>
-                    <ul>
-                        <li>มีไข้สูงเฉียบพลัน หรือเจ็บป่วยรุนแรงในวันที่มานัด</li>
-                        <li>หากเป็นหวัดเล็กน้อย ไม่มีไข้ สามารถรับวัคซีนได้ตามปกติ</li>
-                        <li>หลังหายไข้แล้วอย่างน้อย 2-3 วัน สามารถมารับวัคซีนได้ทันที</li>
-                    </ul>
-                </div>
-                <div class="guideline-box" style="background: #ECFDF5; border: 1px solid #A7F3D0;">
-                    <h4 style="color: #047857;">🌡️ การดูแลหลังฉีดวัคซีน</h4>
-                    <ul>
-                        <li>หากมีไข้: เช็ดตัวด้วยน้ำอุ่น และให้ยาพาราเซตามอลตามน้ำหนักตัว</li>
-                        <li>หากปวดบวมบริเวณที่ฉีด: ประคบเย็นใน 24 ชั่วโมงแรก</li>
-                        <li>สังเกตอาการผิดปกติ เช่น หายใจหอบ ผื่นลมพิษขึ้นทั้งตัว รีบพบแพทย์ทันที</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</div>
-
-<!-- Floating Smart Drawer (Bottom Sticky Summary Bar) -->
-<footer class="floating-smart-bar" id="floatingSmartBar">
-    <div class="summary-metrics">
-        <div class="metric-col">
-            <span class="metric-sub">ยอดชำระโดยประมาณ</span>
-            <span class="metric-val val-price" id="summaryTotalCost">0 บาท</span>
-        </div>
-        <div class="metric-col">
-            <span class="metric-sub">จำนวนเข็มฉีด</span>
-            <span class="metric-val" id="summaryNeedleCount">0 เข็ม</span>
-        </div>
-        <div class="metric-col">
-            <span class="metric-sub">วัคซีนชนิดหยอด</span>
-            <span class="metric-val" id="summaryOralCount">0 ครั้ง</span>
-        </div>
-        <div class="metric-col">
-            <span class="metric-sub">ความคุ้มค่าการลดเข็ม</span>
-            <span class="metric-val val-accent" id="summaryPainSaved">ปกติ</span>
+        <div class="guide-box" style="background: rgba(255, 249, 240, 0.75); border-color: #FFE0B2;">
+            <h4 style="color: #FFB74D;">⚠️ ต้องเลื่อนนัดเมื่อไหร่?</h4>
+            <ul style="font-size: 0.9em;">
+                <li><strong>มีไข้ (> 38.0°C):</strong> ต้องเลื่อนนัดเพื่อความแน่ใจและไม่สับสนผลข้างเคียงของวัคซีน</li>
+                <li>ป่วยเฉียบพลันที่มีอาการรุนแรง</li>
+                <li>ได้รับยากดภูมิคุ้มกัน</li>
+                <li style="color: #4CAF50;">*น้ำมูกไหลเล็กน้อย ไม่มีไข้ ฉีดได้*</li>
+            </ul>
         </div>
     </div>
 
-    <div class="summary-actions">
-        <button type="button" class="btn-smart btn-smart-search" onclick="openSearchModal()" title="ค้นหาคลังวัคซีนเสริมทั้งหมด">
-            🔍 คลังวัคซีนเสริม
-        </button>
-        <button type="button" class="btn-smart btn-smart-line" onclick="copyLineSummary()" title="คัดลอกข้อความสรุปส่ง LINE ผู้ปกครอง">
-            📋 ส่งสรุป LINE
-        </button>
-        <button type="button" class="btn-smart btn-smart-print" onclick="printCounselingSheet()" title="พิมพ์ใบสรุปแนะนำวัคซีน A4">
-            🖨️ พิมพ์ / PDF
-        </button>
+    <div class="selector-group">
+        <select id="ageSelect" onchange="filterVaccine()">
+            <option value="">-- เลือกอายุของน้องที่นี่ --</option>
+            <option value="0">แรกเกิด</option>
+            <option value="1">1 เดือน</option>
+            <option value="2">2 เดือน</option>
+            <option value="4">4 เดือน</option>
+            <option value="6">6 เดือน</option>
+            <option value="9">9 เดือน</option>
+            <option value="12">1 ปี</option>
+            <option value="15">1 ปี 3 เดือน</option>
+            <option value="18">1 ปี 6 เดือน</option>
+            <option value="24">2 ปี</option>
+            <option value="48">4 ปี</option>
+            <option value="summary">⭐ สรุปวัคซีนเสริม</option>
+        </select>
     </div>
-</footer>
 
-<!-- Quick Search Modal -->
-<div class="modal-backdrop" id="searchModal" onclick="handleModalBackdropClick(event)">
-    <div class="modal-dialog">
-        <div class="modal-header">
-            <h3>🔍 คลังข้อมูลวัคซีนเสริมทั้งหมด (Vaccine Directory)</h3>
-            <button type="button" class="modal-close-btn" onclick="closeSearchModal()">✕</button>
+    <div id="vaccineList"></div>
+
+    <div id="emergencySection" style="display:none;">
+        <div class="emergency-box">
+            <h4 style="margin:0 0 10px 0; color:var(--success);">🚑 อาการที่ควรกลับมาพบแพทย์ทันทีหลังฉีดวัคซีน</h4>
+            <ul style="font-size:0.95em; color: #555;">
+                <li>มีผื่นลมพิษขึ้นตามตัว หน้าบวม ปากบวม หรือหายใจลำบาก</li>
+                <li>ไข้สูงมากและรับประทานยาแล้วไข้ไม่ลด</li>
+                <li>เด็กซึมลง ไม่ยอมทานนมหรืออาหาร</li>
+                <li>ชัก หรือ ร้องกวนโยเยผิดปกติเป็นเวลานาน</li>
+            </ul>
         </div>
-        <div class="modal-body">
-            <input type="text" id="modalSearchInput" class="modal-search-input" placeholder="พิมพ์ชื่อวัคซีน หรือชื่อโรค เช่น มือเท้าปาก, ไข้เลือดออก, IPD..." oninput="handleSearchFilter()">
-            <div class="search-results-list" id="searchResultsContainer">
-                <!-- Search items rendered dynamically -->
-            </div>
-        </div>
+    </div>
+
+    <div class="footer">
+        อ้างอิง: สมาคมโรคติดเชื้อเด็กแห่งประเทศไทย (PIDST) 2569 | ข้อมูลราคาและชนิดวัคซีนอาจมีการเปลี่ยนแปลง
     </div>
 </div>
 
-<!-- Toast Notice -->
-<div id="toastNotice" class="toast-notice">
-    <span id="toastIcon">✓</span>
-    <span id="toastMessage">คัดลอกข้อความสรุปเรียบร้อยแล้ว</span>
+<div id="floatingSummary" class="floating-summary-bar">
+    <div class="summary-stats">
+        <div class="stat-item">💉 ฉีดวันนี้: <span id="floatInject" class="inject">0</span> เข็ม</div>
+        <div class="stat-item">🍼 ชนิดกินวันนี้: <span id="floatOral" class="oral">0</span> ชนิด</div>
+        <div class="stat-item" id="floatLabContainer" style="display:none;">🩸 แล็บคัดกรอง: <span id="floatLab" class="lab">0</span> รายการ</div>
+    </div>
+    <div class="summary-cost">
+        รวมค่าวัคซีนเสริมวันนี้: <span id="floatPrice">0</span> บาท
+    </div>
 </div>
 
-<!-- Scripts -->
 <script>
-/**
- * Vaccine Guide - Clinical Data & Pricing (v2 Enhanced Edition)
- * หน่วยงาน: ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่
- * เบอร์โทร: 35757 / 36658
- */
-
 const vaccineData = {
     "0": [
-        { 
-            type: "basic", 
-            id: "bcg", 
-            name: "BCG (วัคซีนป้องกันวัณโรค)", 
-            diseases: "วัณโรค (TB)",
-            route: "ID", 
-            site: "ไหล่ซ้าย (Intradermal)",
-            sideEffect: "ตุ่มหนองเล็กๆ บริเวณที่ฉีดหลัง 3-4 สัปดาห์", 
-            care: "ทำความสะอาดด้วยน้ำต้มสุกที่เย็นแล้ว ห้ามบ่งหรือบีบหนองเด็ดขาด" 
-        },
-        { 
-            type: "basic", 
-            id: "hbv1", 
-            name: "HBV 1 (วัคซีนป้องกันตับอักเสบบี เข็มที่ 1)", 
-            diseases: "ไวรัสตับอักเสบบี",
-            route: "IM", 
-            site: "ต้นขาขวา (Intramuscular)",
-            sideEffect: "มีไข้ต่ำๆ ปวด บวม แดง บริเวณที่ฉีด", 
-            care: "เช็ดตัวลดไข้ หากปวดบวมให้ประคบเย็น" 
-        }
+        { type: "basic", id: "bcg", name: "BCG (วัคซีนป้องกันวัณโรค)", route: "ID", sideEffect: "ตุ่มหนองบริเวณที่ฉีด", care: "ทำความสะอาดน้ำต้มสุก ห้ามบ่ง" },
+        { type: "basic", id: "hbv1", name: "HBV 1 (วัคซีนป้องกันตับอักเสบบี เข็มที่ 1)", route: "IM", sideEffect: "ไข้ต่ำ ปวดบวม", care: "เช็ดตัวลดไข้" }
     ],
     "1": [
-        { 
-            type: "basic", 
-            id: "hbv2", 
-            name: "HBV 2 (วัคซีนป้องกันตับอักเสบบี กรณีแม่เป็นพาหะ)", 
-            diseases: "ไวรัสตับอักเสบบี (เฉพาะรายแม่ HBsAg +ve)",
-            route: "IM", 
-            site: "ต้นขาขวา (Intramuscular)",
-            sideEffect: "ปวด บวม แดง บริเวณที่ฉีด", 
-            care: "ประคบเย็นบริเวณที่ฉีด หากมีไข้ให้เช็ดตัวลดไข้" 
-        }
+        { type: "basic", id: "hbv2", name: "HBV 2 (วัคซีนป้องกันตับอักเสบบี กรณีแม่เป็นพาหะ)", route: "IM", sideEffect: "ปวดบวมแดง", care: "ประคบเย็น" }
     ],
     "2": [
-        { 
-            type: "basic", 
-            id: "dtwp1", 
-            name: "DTwP-HB-Hib 1 (วัคซีนรวม 5 โรค เข็มที่ 1)", 
-            diseases: "คอตีบ, ไอกรน (เชื้อตายทั้งตัว), บาดทะยัก, ตับอักเสบบี, ฮิบ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            sideEffect: "อาจมีไข้สูง ร้องกวน ปวด บวม แดง บริเวณที่ฉีด 1-2 วัน", 
-            care: "ให้ยาลดไข้พาราเซตามอลตามแพทย์สั่ง เช็ดตัวลดไข้ และประคบเย็น" 
-        },
-        { 
-            type: "basic", 
-            id: "ipv1", 
-            name: "IPV 1 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", 
-            diseases: "โปลิโอ 3 สายพันธุ์",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            sideEffect: "ปวด บวม แดง เล็กน้อย", 
-            care: "ประคบเย็นบริเวณที่ฉีด" 
-        },
-        { 
-            type: "basic", 
-            id: "rota1", 
-            name: "Rota 1 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", 
-            diseases: "ท้องร่วงรุนแรงจากไวรัสโรต้า",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "อาจมีแหวะนมเล็กน้อย ถ่ายเหลวกว่าปกติ", 
-            care: "งดนมก่อนและหลังหยอดวัคซีนอย่างน้อย 30 นาที" 
-        },
-        { 
-            type: "optional", 
-            id: "hexa1", 
-            replaceIds: ["dtwp1", "ipv1"], 
-            name: "Infanrix-Hexa (วัคซีนรวม 6 โรค ไอกรนไร้เซลล์) เข็มที่ 1", 
-            diseases: "คอตีบ, ไอกรน (aP ไร้เซลล์), บาดทะยัก, ตับอักเสบบี, ฮิบ, โปลิโอ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            detail: "ลดเข็มฉีดรวม DTwP + IPV เข้าเป็นเข็มเดียว และเป็นไอกรนไร้เซลล์ที่โอกาสเกิดไข้ต่ำกว่ามาก", 
-            price: 1568, 
-            sideEffect: "โอกาสเกิดไข้ต่ำมาก ปวดบวมเล็กน้อย", 
-            care: "เช็ดตัวหากมีไข้ หรือประคบเย็นหากมีอาการบวม",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "ipd1", 
-            name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 1", 
-            diseases: "ปอดบวม, เยื่อหุ้มสมองอักเสบ, ติดเชื้อในกระแสเลือด และหูชั้นกลางอักเสบ",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            isIpdGroup: true, 
-            subVariants: [
-                { name: "Synflorix (10 สายพันธุ์)", price: 1756, tag: "คุ้มค่า ประหยัด" },
-                { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533, tag: "ครอบคลุมสูงสุด 20 สายพันธุ์" },
-                { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469, tag: "13 สายพันธุ์ ทางเลือกประหยัด" }
-            ], 
-            sideEffect: "ไข้ต่ำ ปวดหรือบวมบริเวณที่ฉีด", 
-            care: "เช็ดตัวลดไข้ ประคบเย็นบริเวณที่ฉีด",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "bexsero1", 
-            name: "Bexsero (วัคซีนป้องกันไข้กาฬหลังแอ่น สายพันธุ์ B) เข็มที่ 1", 
-            diseases: "ไข้กาฬหลังแอ่น สายพันธุ์ B (Neisseria meningitidis B) เสี่ยงเยื่อหุ้มสมองอักเสบและติดเชื้อรวดเร็ว",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            detail: "อายุ < 1 ปี ฉีด 3 เข็ม (ห่างกัน 2 เดือน และเข็มกระตุ้นช่วงขวบปี) | หากเริ่ม > 1 ปี ฉีด 2 เข็ม", 
-            price: 3071, 
-            sideEffect: "อาจมีไข้ ปวด บวม บริเวณที่ฉีด", 
-            care: "ให้ยาลดไข้พาราเซตามอล เช็ดตัว และประคบเย็น",
-            preset: ["total"]
-        }
+        { type: "basic", id: "dtwp1", name: "DTwP-HB-Hib 1 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", sideEffect: "ไข้สูง ร้องกวน", care: "ยาลดไข้/เช็ดตัว" },
+        { type: "basic", id: "ipv1", name: "IPV 1 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", route: "IM", sideEffect: "บวมแดง", care: "ประคบเย็น" },
+        { type: "basic", id: "rota1", name: "Rota 1 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", route: "Oral", sideEffect: "แหวะนม/ถ่ายเหลว", care: "งดนมก่อน-หลัง 30 นาที" },
+        { type: "optional", id: "hexa1", replaceIds: ["dtwp1", "ipv1"], name: "Infanrix-Hexa (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ และโปลิโอ) เข็มที่ 1", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: 1568, sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "ipd1", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 1", route: "IM", isIpdGroup: true, subVariants: [
+            { name: "Synflorix (10 สายพันธุ์)", price: 1756 },
+            { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533 },
+            { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469 }
+        ], sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "bexsero1", name: "Bexsero (วัคซีนป้องกันโรคไข้กาฬหลังแอ่น สายพันธุ์ B) เข็มที่ 1", route: "IM", detail: "อายุ < 1 ปี ฉีด 3 เข็ม (ห่างกัน 2 เดือน และ 6 เดือน) | อายุ > 1 ปี ฉีด 2 เข็ม (ห่างกัน 2 เดือน)", price: 3071, sideEffect: "มีไข้ ปวด", care: "ยาลดไข้/ประคบเย็น" }
     ],
     "4": [
-        { 
-            type: "basic", 
-            id: "dtwp2", 
-            name: "DTwP-HB-Hib 2 (วัคซีนรวม 5 โรค เข็มที่ 2)", 
-            diseases: "คอตีบ, ไอกรน (เชื้อตายทั้งตัว), บาดทะยัก, ตับอักเสบบี, ฮิบ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            sideEffect: "อาจมีไข้สูง ร้องกวน ปวด บวม แดง", 
-            care: "ให้ยาลดไข้ เช็ดตัว และประคบเย็น" 
-        },
-        { 
-            type: "basic", 
-            id: "ipv2", 
-            name: "IPV 2 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", 
-            diseases: "โปลิโอ 3 สายพันธุ์",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            sideEffect: "ปวด บวม แดง เล็กน้อย", 
-            care: "ประคบเย็นบริเวณที่ฉีด" 
-        },
-        { 
-            type: "basic", 
-            id: "rota2", 
-            name: "Rota 2 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", 
-            diseases: "ท้องร่วงรุนแรงจากไวรัสโรต้า",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "แหวะนมเล็กน้อย", 
-            care: "งดนมก่อนและหลังหยอด 30 นาที" 
-        },
-        { 
-            type: "optional", 
-            id: "penta1", 
-            replaceIds: ["dtwp2", "ipv2"], 
-            name: "Infanrix-IPV-HIB (วัคซีนรวม 5 โรค ไอกรนไร้เซลล์)", 
-            diseases: "คอตีบ, ไอกรน (ไร้เซลล์), บาดทะยัก, โปลิโอ, เชื้อฮิบ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            detail: "ลดเข็มฉีดรวม DTwP + IPV เข้าเป็นเข็มเดียว ไข้ต่ำกว่า", 
-            price: 1297, 
-            sideEffect: "ไข้ต่ำ ปวดบวมเล็กน้อย", 
-            care: "เช็ดตัว และประคบเย็น",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "ipd2", 
-            name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 2", 
-            diseases: "ปอดบวม, เยื่อหุ้มสมองอักเสบ, ติดเชื้อในกระแสเลือด",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            isIpdGroup: true, 
-            subVariants: [
-                { name: "Synflorix (10 สายพันธุ์)", price: 1756, tag: "คุ้มค่า ประหยัด" },
-                { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533, tag: "ครอบคลุมสูงสุด 20 สายพันธุ์" },
-                { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469, tag: "13 สายพันธุ์ ทางเลือกประหยัด" }
-            ], 
-            sideEffect: "ไข้ต่ำ ปวดบวม", 
-            care: "ประคบเย็น และเช็ดตัวลดไข้",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "bexsero2", 
-            name: "Bexsero (วัคซีนป้องกันไข้กาฬหลังแอ่น สายพันธุ์ B) เข็มที่ 2", 
-            diseases: "ไข้กาฬหลังแอ่น สายพันธุ์ B",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            detail: "เข็มที่ 2 ห่างจากเข็มแรก 2 เดือน",
-            price: 3071, 
-            sideEffect: "มีไข้ ปวด บวม", 
-            care: "ยาลดไข้พาราเซตามอล เช็ดตัว ประคบเย็น",
-            preset: ["total"]
-        }
+        { type: "basic", id: "dtwp2", name: "DTwP-HB-Hib 2 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", sideEffect: "ไข้สูง", care: "เช็ดตัว" },
+        { type: "basic", id: "ipv2", name: "IPV 2 (วัคซีนป้องกันโปลิโอ ชนิดฉีด)", route: "IM", sideEffect: "บวมแดง", care: "ประคบเย็น" },
+        { type: "basic", id: "rota2", name: "Rota 2 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", route: "Oral", sideEffect: "งดนมก่อน-หลัง 30 นาที", care: "สังเกตอาการ" },
+        { type: "optional", id: "penta1", replaceIds: ["dtwp2", "ipv2"], name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: 1297, sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "ipd2", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 2", route: "IM", isIpdGroup: true, subVariants: [
+            { name: "Synflorix (10 สายพันธุ์)", price: 1756 },
+            { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533 },
+            { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469 }
+        ], sideEffect: "ไข้ต่ำ", care: "ประคบเย็น" },
+        { type: "optional", id: "bexsero2", name: "Bexsero (วัคซีนป้องกันโรคไข้กาฬหลังแอ่น สายพันธุ์ B) เข็มที่ 2", route: "IM", price: 3071, sideEffect: "มีไข้ ปวด", care: "ยาลดไข้/ประคบเย็น" }
     ],
     "6": [
-        { 
-            type: "basic", 
-            id: "dtwp3", 
-            name: "DTwP-HB-Hib 3 (วัคซีนรวม 5 โรค เข็มที่ 3)", 
-            diseases: "คอตีบ, ไอกรน, บาดทะยัก, ตับอักเสบบี, ฮิบ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            sideEffect: "ไข้ ร้องกวน ปวดบวม", 
-            care: "ยาลดไข้ เช็ดตัว" 
-        },
-        { 
-            type: "basic", 
-            id: "opv3", 
-            name: "OPV 3 (วัคซีนป้องกันโปลิโอ ชนิดหยอด)", 
-            diseases: "โปลิโอ",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "ผลข้างเคียงน้อยมาก", 
-            care: "สังเกตอาการ งดนม 30 นาที" 
-        },
-        { 
-            type: "basic", 
-            id: "rota3", 
-            name: "Rota 3 (วัคซีนป้องกันไวรัสโรต้า เข็มที่ 3)", 
-            diseases: "ไวรัสโรต้า",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "แหวะนมเล็กน้อย ถ่ายเหลว", 
-            care: "งดนมก่อน-หลัง 30 นาที" 
-        },
-        { 
-            type: "optional", 
-            id: "hexa2", 
-            replaceIds: ["dtwp3", "opv3"], 
-            name: "Infanrix-Hexa (วัคซีนรวม 6 โรค ไอกรนไร้เซลล์) เข็มที่ 2", 
-            diseases: "คอตีบ, ไอกรน (ไร้เซลล์), บาดทะยัก, ตับอักเสบบี, ฮิบ, โปลิโอ",
-            route: "IM", 
-            site: "ต้นขาซ้าย",
-            detail: "ลดการกินโปลิโอหยอด OPV เปลี่ยนเป็นฉีดรวมในเข็มเดียว ไข้ต่ำ", 
-            price: 1568, 
-            sideEffect: "ไข้ต่ำ ปวดบวมเล็กน้อย", 
-            care: "เช็ดตัว และประคบเย็น",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "ipd3", 
-            name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 3", 
-            diseases: "ปอดบวม, เยื่อหุ้มสมองอักเสบ",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            isIpdGroup: true, 
-            subVariants: [
-                { name: "Synflorix (10 สายพันธุ์)", price: 1756, tag: "คุ้มค่า ประหยัด" },
-                { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533, tag: "ครอบคลุมสูงสุด 20 สายพันธุ์" },
-                { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469, tag: "13 สายพันธุ์ ทางเลือกประหยัด" }
-            ], 
-            sideEffect: "ไข้ต่ำ ปวดบวม", 
-            care: "ประคบเย็น เช็ดตัว",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "entro1", 
-            name: "EntroVac (วัคซีนป้องกันโรคมือเท้าปาก EV71) เข็มที่ 1", 
-            diseases: "โรคมือ เท้า ปาก สายพันธุ์ Enterovirus 71 (รุนแรงสุดที่ทำให้สมองอักเสบ)",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            detail: "เริ่มฉีดได้ตั้งแต่ 6 เดือน - 5 ปี | ฉีด 2 เข็ม ห่างกัน 1 เดือน", 
-            price: 2701, 
-            sideEffect: "ปวด บวม แดง บริเวณที่ฉีด", 
-            care: "ประคบเย็น สังเกตอาการ",
-            preset: ["total"]
-        },
-        { 
-            type: "optional", 
-            id: "flu", 
-            name: "Influenza (วัคซีนป้องกันไข้หวัดใหญ่ 4 สายพันธุ์)", 
-            diseases: "ไข้หวัดใหญ่ 4 สายพันธุ์ตามฤดูกาล",
-            route: "IM", 
-            site: "ต้นขาขวา",
-            detail: "เริ่มฉีดที่ 6 เดือน | ฉีดปีละครั้ง (ปีแรกที่ฉีดในเด็กอายุ < 9 ปี ต้องฉีด 2 เข็ม ห่างกัน 1 เดือน)", 
-            price: 306, 
-            sideEffect: "ไข้ต่ำ ปวดเมื่อยตามตัว", 
-            care: "พักผ่อน เช็ดตัว ดื่มน้ำเพียงพอ",
-            preset: ["comfort", "total"]
-        }
+        { type: "basic", id: "dtwp3", name: "DTwP-HB-Hib 3 (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี และเชื้อฮิบ)", route: "IM", sideEffect: "ไข้", care: "เช็ดตัว" },
+        { type: "basic", id: "opv3", name: "OPV 3 (วัคซีนป้องกันโปลิโอ ชนิดหยอด)", route: "Oral", sideEffect: "มีผลข้างเคียงน้อยมาก", care: "สังเกตอาการ" },
+        { type: "basic", id: "rota3", name: "Rota 3 (วัคซีนป้องกันท้องร่วงจากไวรัสโรต้า)", route: "Oral", sideEffect: "แหวะนม/ถ่ายเหลว", care: "งดนมก่อน-หลัง 30 นาที" },
+        { type: "optional", id: "hexa2", replaceIds: ["dtwp3", "opv3"], name: "Infanrix-Hexa (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ และโปลิโอ) เข็มที่ 2", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: 1568, sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "ipd3", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มที่ 3", route: "IM", isIpdGroup: true, subVariants: [
+            { name: "Synflorix (10 สายพันธุ์)", price: 1756 },
+            { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533 },
+            { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469 }
+        ], sideEffect: "ไข้ต่ำ", care: "ประคบเย็น" },
+        { type: "optional", id: "entro1", name: "EntroVac (วัคซีนป้องกันโรคมือเท้าปาก) เข็มที่ 1", route: "IM", detail: "เริ่ม 6 เดือน - 5 ปี | ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: 2701, sideEffect: "ปวดบวม", care: "สังเกตอาการ" },
+        { type: "optional", id: "flu", name: "Influenza (วัคซีนป้องกันไข้หวัดใหญ่)", route: "IM", detail: "เริ่มฉีดที่ 6 เดือน | ฉีดปีละครั้ง สำหรับเด็กอายุ < 9 ปี ที่เริ่มฉีดปีแรก ให้ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: 306, sideEffect: "ไข้ต่ำ", care: "พักผ่อน" }
     ],
     "9": [
-        { 
-            type: "screening", 
-            id: "cbc", 
-            name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจาง)", 
-            diseases: "ตรวจหาภาวะซีด/ขาดธาตุเหล็ก หรือธาลัสซีเมีย",
-            detail: "กรุณาติดต่อห้องเจาะเลือดก่อนเข้าพบแพทย์",
-            sideEffect: "รอยเข็มเจาะเลือด",
-            care: "กดสำลีแน่นๆ ห้ามขยี้ 5 นาที"
-        },
-        { 
-            type: "basic", 
-            id: "je1", 
-            name: "Live JE 1 (วัคซีนป้องกันไข้สมองอักเสบเจอี ชนิดเชื้อเป็น)", 
-            diseases: "ไข้สมองอักเสบเจอี (Japanese Encephalitis)",
-            route: "SC", 
-            site: "ต้นแขนขวา (Subcutaneous)",
-            sideEffect: "ไข้ ปวด บวม บริเวณที่ฉีด", 
-            care: "เช็ดตัวลดไข้ ประคบเย็น" 
-        }
+        { type: "screening", id: "cbc", name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจาง)", detail: "กรุณาเจาะเลือดก่อนพบแพทย์" },
+        { type: "basic", id: "je1", name: "Live JE 1 (วัคซีนป้องกันไข้สมองอักเสบเจอี)", route: "SC", sideEffect: "ไข้ ปวด บวมบริเวณที่ฉีด", care: "เช็ดตัว" }
     ],
     "12": [
-        { 
-            type: "basic", 
-            id: "mmr1", 
-            name: "MMR 1 (วัคซีนป้องกันโรคหัด คางทูม หัดเยอรมัน)", 
-            diseases: "โรคหัด (Measles), คางทูม (Mumps), หัดเยอรมัน (Rubella)",
-            route: "SC", 
-            site: "ต้นแขนซ้าย",
-            sideEffect: "อาจมีไข้หรือผื่นแดงหลังฉีด 5-12 วัน (ผลช้าตามธรรมชาติของเชื้อเป็น)", 
-            care: "เช็ดตัวลดไข้ สังเกตอาการ ผื่นจะยุบหายไปเอง" 
-        },
-        { 
-            type: "optional", 
-            id: "var1", 
-            name: "Varivax (วัคซีนป้องกันโรคอีสุกอีใส) เข็มที่ 1", 
-            diseases: "โรคอีสุกอีใส (Varicella)",
-            route: "SC", 
-            site: "ต้นแขนขวา",
-            detail: "เริ่มฉีดที่ 1 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", 
-            price: 983, 
-            sideEffect: "ไข้ต่ำ ตุ่มน้ำใสเล็กน้อย 1-2 สัปดาห์หลังฉีด", 
-            care: "สังเกตอาการ เช็ดตัว",
-            preset: ["total"]
-        },
-        { 
-            type: "optional", 
-            id: "bexsero_booster", 
-            name: "Bexsero (วัคซีนป้องกันไข้กาฬหลังแอ่น สายพันธุ์ B) เข็มกระตุ้น / เริ่มฉีด", 
-            diseases: "ไข้กาฬหลังแอ่น สายพันธุ์ B",
-            route: "IM", 
-            site: "ต้นขาหรือต้นแขน",
-            detail: "เข็มที่ 3 กระตุ้น (กรณีเริ่มฉีดก่อน 1 ปี) หรือเริ่มฉีดครั้งแรกสำหรับเด็ก > 1 ปี (ฉีด 2 เข็ม ห่างกัน 2 เดือน)", 
-            price: 3071, 
-            sideEffect: "มีไข้ ปวด บวม", 
-            care: "ยาลดไข้ ประคบเย็น",
-            preset: ["total"]
-        }
+        { type: "basic", id: "mmr1", name: "MMR 1 (วัคซีนป้องกันโรคหัด คางทูม หัดเยอรมัน)", route: "SC", sideEffect: "ไข้/ผื่นแดง", care: "เช็ดตัว" },
+        { type: "optional", id: "var1", name: "Varivax (วัคซีนป้องกันโรคอีสุกอีใส) เข็มที่ 1", route: "SC", detail: "เริ่มฉีดที่ 1 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: 983, sideEffect: "ไข้ต่ำ", care: "สังเกตอาการ" },
+        { type: "optional", id: "bexsero_booster", name: "Bexsero (วัคซีนป้องกันโรคไข้กาฬหลังแอ่น สายพันธุ์ B) เข็ม 3 กระตุ้น / เริ่มฉีด", route: "IM", detail: "หากเริ่มฉีดครั้งแรกในเด็กอายุ > 1 ปี (ฉีด 2 เข็ม ห่างกัน 2 เดือน)", price: 3071, sideEffect: "มีไข้ ปวด", care: "ยาลดไข้/ประคบเย็น" }
     ],
     "15": [
-        { 
-            type: "optional", 
-            id: "ipd_booster", 
-            name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มกระตุ้น", 
-            diseases: "ปอดบวม, เยื่อหุ้มสมองอักเสบ (เข็มกระตุ้นภูมิคุ้มกันระยะยาว)",
-            route: "IM", 
-            site: "ต้นขาหรือต้นแขน",
-            isIpdGroup: true, 
-            subVariants: [
-                { name: "Synflorix (10 สายพันธุ์)", price: 1756, tag: "คุ้มค่า ประหยัด" },
-                { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533, tag: "ครอบคลุมสูงสุด 20 สายพันธุ์" },
-                { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469, tag: "13 สายพันธุ์ ทางเลือกประหยัด" }
-            ], 
-            sideEffect: "ปวด บวม แดง ไข้ต่ำ", 
-            care: "ประคบเย็นบริเวณที่ฉีด และเช็ดตัวลดไข้",
-            preset: ["comfort", "total"]
-        }
+        { type: "optional", id: "ipd_booster", name: "IPD (วัคซีนป้องกันเชื้อนิวโมคอคคัส) เข็มกระตุ้น", route: "IM", isIpdGroup: true, subVariants: [
+            { name: "Synflorix (10 สายพันธุ์)", price: 1756 },
+            { name: "Prevnar 20 (20 สายพันธุ์)", price: 2533 },
+            { name: "Weuphoria PFS (13 สายพันธุ์)", price: 1469 }
+        ], sideEffect: "ปวดบวม", care: "ประคบเย็น" }
     ],
     "18": [
-        { 
-            type: "basic", 
-            id: "dtp4", 
-            name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 1", 
-            diseases: "คอตีบ, ไอกรน, บาดทะยัก",
-            route: "IM", 
-            site: "ต้นแขนซ้ายหรือต้นขา",
-            sideEffect: "อาจมีไข้สูง ปวด บวม", 
-            care: "ประคบเย็น เช็ดตัว ให้ยาลดไข้" 
-        },
-        { 
-            type: "basic", 
-            id: "opv4", 
-            name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด) กระตุ้นครั้งที่ 1", 
-            diseases: "โปลิโอ",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "ผลข้างเคียงน้อย", 
-            care: "สังเกตอาการ งดนม 30 นาที" 
-        },
-        { 
-            type: "basic", 
-            id: "mmr2_18", 
-            name: "MMR 2 (วัคซีนป้องกันโรคหัด คางทูม และหัดเยอรมัน) เข็มที่ 2", 
-            diseases: "หัด, คางทูม, หัดเยอรมัน",
-            route: "SC", 
-            site: "ต้นแขนขวา",
-            sideEffect: "ไข้ต่ำ หรือผื่นเล็กน้อย", 
-            care: "เช็ดตัว สังเกตอาการ" 
-        },
-        { 
-            type: "optional", 
-            id: "penta2", 
-            replaceIds: ["dtp4", "opv4"], 
-            name: "Infanrix-IPV-HIB (วัคซีนรวม 5 โรค ไอกรนไร้เซลล์) เข็มกระตุ้น", 
-            diseases: "คอตีบ, ไอกรน (ไร้เซลล์), บาดทะยัก, โปลิโอ, เชื้อฮิบ",
-            route: "IM", 
-            site: "ต้นแขนซ้ายหรือต้นขา",
-            detail: "ลดการกิน OPV + รวม DTP เข้าเป็นเข็มเดียว ไข้ต่ำกว่า", 
-            price: 1297, 
-            sideEffect: "ไข้ต่ำ ปวดบวมเล็กน้อย", 
-            care: "เช็ดตัว และประคบเย็น",
-            preset: ["comfort", "total"]
-        }
+        { type: "basic", id: "dtp4", name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 1", route: "IM", sideEffect: "ไข้สูง", care: "ประคบเย็น" },
+        { type: "basic", id: "opv4", name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด) กระตุ้นครั้งที่ 1", route: "Oral", sideEffect: "ผลข้างเคียงน้อย", care: "สังเกตอาการ" },
+        { type: "basic", id: "mmr2_18", name: "MMR 2 (วัคซีนป้องกันโรคหัด คางทูม และหัดเยอรมัน) เข็มที่ 2", route: "SC", sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "penta2", replaceIds: ["dtp4", "opv4"], name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: 1297, sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" }
     ],
     "24": [
-        { 
-            type: "basic", 
-            id: "je2", 
-            name: "Live JE 2 (วัคซีนป้องกันไข้สมองอักเสบเจอี ชนิดเชื้อเป็น) เข็มที่ 2", 
-            diseases: "ไข้สมองอักเสบเจอี",
-            route: "SC", 
-            site: "ต้นแขนขวา",
-            sideEffect: "มีไข้ ปวด บวม บริเวณที่ฉีด", 
-            care: "เช็ดตัว ให้ยาลดไข้" 
-        }
+        { type: "basic", id: "je2", name: "Live JE 2 (วัคซีนป้องกันไข้สมองอักเสบเจอี)", route: "SC", sideEffect: "ไข้", care: "เช็ดตัว" }
     ],
     "48": [
-        { 
-            type: "screening", 
-            id: "cbc2", 
-            name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจางครั้งที่ 2)", 
-            diseases: "ตรวจประเมินภาวะโลหิตจางก่อนเข้าวัยเรียน",
-            detail: "กรุณาเจาะเลือดก่อนเข้าพบแพทย์",
-            sideEffect: "รอยเข็มเจาะเลือด",
-            care: "กดสำลีแน่นๆ 5 นาที"
-        },
-        { 
-            type: "basic", 
-            id: "dtp5", 
-            name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 2", 
-            diseases: "คอตีบ, ไอกรน, บาดทะยัก",
-            route: "IM", 
-            site: "ต้นแขนซ้าย",
-            sideEffect: "ไข้สูง ปวด บวม แดง", 
-            care: "ให้ยาลดไข้ ประคบเย็น เช็ดตัว" 
-        },
-        { 
-            type: "basic", 
-            id: "opv5", 
-            name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด) กระตุ้นครั้งที่ 2", 
-            diseases: "โปลิโอ",
-            route: "Oral", 
-            site: "หยอดทางปาก",
-            sideEffect: "ผลข้างเคียงน้อย", 
-            care: "สังเกตอาการ งดนม 30 นาที" 
-        },
-        { 
-            type: "optional", 
-            id: "boostagen", 
-            replaceIds: ["dtp5"], 
-            name: "Boostagen (TdaP) (วัคซีนรวมป้องกันบาดทะยัก คอตีบ ไอกรนไร้เซลล์)", 
-            diseases: "บาดทะยัก, คอตีบ, ไอกรน (ไร้เซลล์)",
-            route: "IM", 
-            site: "ต้นแขนขวา",
-            detail: "ใช้ทดแทนวัคซีนพื้นฐาน DTP | เริ่มฉีดได้อายุ ≥ 3 ปี", 
-            price: 644, 
-            sideEffect: "ไข้ต่ำ ปวดบริเวณที่ฉีด", 
-            care: "เช็ดตัว และประคบเย็น",
-            preset: []
-        },
-        { 
-            type: "optional", 
-            id: "penta3", 
-            replaceIds: ["dtp5", "opv5"], 
-            name: "Infanrix-IPV-HIB (วัคซีนรวม 5 โรค ไอกรนไร้เซลล์) กระตุ้น 4 ขวบ", 
-            diseases: "คอตีบ, ไอกรน (ไร้เซลล์), บาดทะยัก, โปลิโอ, ฮิบ",
-            route: "IM", 
-            site: "ต้นแขนซ้าย",
-            detail: "รวมเข็ม ลดการกิน OPV ไข้ต่ำกว่า", 
-            price: 1297, 
-            sideEffect: "ไข้ต่ำ ปวดบวมเล็กน้อย", 
-            care: "เช็ดตัว และประคบเย็น",
-            preset: ["comfort", "total"]
-        },
-        { 
-            type: "optional", 
-            id: "qdenga", 
-            name: "QdengaPFS (วัคซีนป้องกันโรคไข้เลือดออก 4 สายพันธุ์) เข็มที่ 1", 
-            diseases: "ไข้เลือดออก 4 สายพันธุ์ (Dengue virus 1-4) ฉีดได้ทั้งผู้ที่เคยและไม่เคยเป็นไข้เลือดออกมาก่อน",
-            route: "SC", 
-            site: "ต้นแขนขวา",
-            detail: "เริ่มฉีดได้ที่อายุ 4 ปีขึ้นไป | ฉีด 2 เข็ม ห่างกัน 3 เดือน", 
-            price: 1639, 
-            sideEffect: "ปวดเมื่อย ปวดศีรษะ ไข้ต่ำ", 
-            care: "เช็ดตัว ดื่มน้ำมากๆ",
-            preset: ["total"]
-        }
+        { type: "screening", id: "cbc2", name: "🩸 เจาะเลือด CBC & RC (คัดกรองภาวะโลหิตจาง)", detail: "กรุณาเจาะเลือดก่อนพบแพทย์" },
+        { type: "basic", id: "dtp5", name: "DTP (วัคซีนป้องกันโรคคอตีบ ไอกรน บาดทะยัก) กระตุ้นครั้งที่ 2", route: "IM", sideEffect: "ไข้สูง", care: "ยาลดไข้" },
+        { type: "basic", id: "opv5", name: "OPV (วัคซีนป้องกันโปลิโอ ชนิดหยอด)กระตุ้นครั้งที่ 2", route: "Oral", sideEffect: "ผลข้างเคียงน้อย", care: "สังเกตอาการ" },
+        { type: "optional", id: "boostagen", replaceIds: ["dtp5"], name: "Boostagen (TdaP) (วัคซีนรวมป้องกันบาดทะยัก คอตีบ ไอกรนไร้เซลล์)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน DTP | เริ่มฉีดได้อายุ ≥ 3 ปี", price: 644, sideEffect: "ไข้ต่ำ ปวดบริเวณที่ฉีด", care: "เช็ดตัว และประคบเย็น" },
+        { type: "optional", id: "penta3", replaceIds: ["dtp5", "opv5"], name: "Infanrix-IPV-HIB (วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ และเชื้อฮิบ)", route: "IM", detail: "ใช้ทดแทนวัคซีนพื้นฐาน", price: 1297, sideEffect: "ไข้ต่ำ", care: "เช็ดตัว" },
+        { type: "optional", id: "qdenga", name: "QdengaPFS (วัคซีนป้องกันโรคไข้เลือดออก) เข็มที่ 1", route: "SC", detail: "เริ่มฉีดที่ 4 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: 1639, sideEffect: "ปวดเมื่อย", care: "เช็ดตัว" }
     ]
 };
 
-// คลังวัคซีนเสริมทั้งหมด สำหรับการค้นหาด่วน (Quick Search Directory)
 const optionalSummary = [
-    { 
-        id: "opt_hexa", 
-        name: "Infanrix-Hexa", 
-        thai: "วัคซีนรวม 6 โรค (คอตีบ ไอกรนไร้เซลล์ บาดทะยัก ตับอักเสบบี ฮิบ โปลิโอ)", 
-        target: "คอตีบ ไอกรน บาดทะยัก ตับบี ฮิบ โปลิโอ",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "ใช้ทดแทนวัคซีนพื้นฐาน DTwP + IPV เพื่อลดเหลือเข็มเดียว และลดโอกาสไข้สูง", 
-        info: "อายุ 2 และ 6 เดือน", 
-        price: 1568, 
-        priceText: "1,568 บาท" 
-    },
-    { 
-        id: "opt_penta", 
-        name: "Infanrix-IPV-HIB", 
-        thai: "วัคซีนรวม 5 โรค (คอตีบ ไอกรนไร้เซลล์ บาดทะยัก โปลิโอ ฮิบ)", 
-        target: "คอตีบ ไอกรน บาดทะยัก โปลิโอ ฮิบ",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "ใช้ทดแทนวัคซีนพื้นฐาน DTwP + OPV เพื่อลดเข็มฉีดและไม่ต้องหยอดปาก", 
-        info: "อายุ 4 เดือน, 18 เดือน, 4 ปี", 
-        price: 1297, 
-        priceText: "1,297 บาท" 
-    },
-    { 
-        id: "opt_boostagen", 
-        name: "Boostagen (TdaP)", 
-        thai: "วัคซีนรวมป้องกันบาดทะยัก คอตีบ ไอกรนไร้เซลล์ (TdaP)", 
-        target: "บาดทะยัก คอตีบ ไอกรนไร้เซลล์ (ลดโอกาสเกิดไข้สูงและปวดบวม)",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "ใช้ทดแทนวัคซีนพื้นฐาน DTP", 
-        info: "เริ่มฉีดได้ตั้งแต่อายุ ≥ 3 ปีขึ้นไป (แนะนำกระตุ้นที่ 4 ปี)", 
-        price: 644, 
-        priceText: "644 บาท" 
-    },
-    { 
-        id: "opt_ipd", 
-        name: "IPD (Synflorix / Prevnar 20 / Weuphoria)", 
-        thai: "วัคซีนป้องกันเชื้อนิวโมคอคคัส (โรคปอดบวม/เยื่อหุ้มสมองอักเสบ)", 
-        target: "ปอดบวม เยื่อหุ้มสมองอักเสบ ติดเชื้อในกระแสเลือด หูชั้นกลางอักเสบ",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "เลือกได้ 3 ยี่ห้อตามจำนวนสายพันธุ์และความคุ้มค่า", 
-        info: "ฉีดอายุ 2, 4, 6 และ 15 เดือน (กระตุ้น)", 
-        price: 1469, 
-        priceText: "1,469 - 2,533 บาท" 
-    },
-    { 
-        id: "opt_bexsero", 
-        name: "Bexsero", 
-        thai: "วัคซีนป้องกันโรคไข้กาฬหลังแอ่น สายพันธุ์ B", 
-        target: "ไข้กาฬหลังแอ่น สายพันธุ์ B เสี่ยงเยื่อหุ้มสมองอักเสบเฉียบพลัน",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "อายุ < 1 ปี ฉีด 3 เข็ม (ห่าง 2 ด. และ 6 ด.) | อายุ > 1 ปี ฉีด 2 เข็ม (ห่าง 2 ด.)", 
-        info: "เริ่ม 2 เดือน (2, 4 เดือน, 1 ขวบ)", 
-        price: 3071, 
-        priceText: "3,071 บาท" 
-    },
-    { 
-        id: "opt_var", 
-        name: "Varivax", 
-        thai: "วัคซีนป้องกันโรคอีสุกอีใส", 
-        target: "โรคอีสุกอีใส (Varicella)",
-        route: "SC (ฉีดใต้ผิวหนัง)", 
-        note: "ฉีด 2 เข็ม ห่างกัน 3 เดือน", 
-        info: "เริ่มฉีดได้ที่อายุ 1 ปีขึ้นไป", 
-        price: 983, 
-        priceText: "983 บาท" 
-    },
-    { 
-        id: "opt_entro", 
-        name: "EntroVac", 
-        thai: "วัคซีนป้องกันโรคมือเท้าปาก (EV71)", 
-        target: "โรคมือเท้าปากสายพันธุ์ EV71 ที่รุนแรงต่อระบบประสาทและหัวใจ",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "ฉีด 2 เข็ม ห่างกัน 1 เดือน", 
-        info: "เริ่ม 6 เดือน - 5 ปี", 
-        price: 2701, 
-        priceText: "2,701 บาท" 
-    },
-    { 
-        id: "opt_flu", 
-        name: "Influenza (วัคซีนไข้หวัดใหญ่ 4 สายพันธุ์)", 
-        thai: "วัคซีนป้องกันโรคไข้หวัดใหญ่", 
-        target: "ไข้หวัดใหญ่สายพันธุ์ A และ B ตามฤดูกาล",
-        route: "IM (ฉีดกล้ามเนื้อ)", 
-        note: "ฉีดปีละครั้ง (ปีแรกที่เริ่มฉีดในเด็กอายุ < 9 ปี ให้ฉีด 2 เข็ม ห่างกัน 1 เดือน)", 
-        info: "เริ่มฉีดได้ตั้งแต่ 6 เดือนขึ้นไป", 
-        price: 306, 
-        priceText: "306 บาท" 
-    },
-    { 
-        id: "opt_qdenga", 
-        name: "QdengaPFS", 
-        thai: "วัคซีนป้องกันโรคไข้เลือดออก 4 สายพันธุ์", 
-        target: "ไข้เลือดออกสายพันธุ์ 1-4 ฉีดได้โดยไม่ต้องตรวจเลือดก่อน",
-        route: "SC (ฉีดใต้ผิวหนัง)", 
-        note: "ฉีด 2 เข็ม ห่างกัน 3 เดือน", 
-        info: "เริ่มฉีดได้ตั้งแต่ 4 ปีขึ้นไป", 
-        price: 1639, 
-        priceText: "1,639 บาท" 
-    }
+    { name: "Infanrix-Hexa", thai: "วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก ตับอักเสบบี ฮิบ โปลิโอ", route: "IM", note: "ใช้ทดแทนวัคซีนพื้นฐาน", info: "อายุ 2, 6 เดือน", price: "1,568 บาท" },
+    { name: "Infanrix-IPV-HIB", thai: "วัคซีนป้องกันคอตีบ ไอกรน บาดทะยัก โปลิโอ ฮิบ", route: "IM", note: "ใช้ทดแทนวัคซีนพื้นฐาน", info: "อายุ 4 เดือน, 18 เดือน, 4 ปี", price: "1,297 บาท" },
+    { name: "Boostagen (TdaP)", thai: "วัคซีนรวมป้องกันบาดทะยัก คอตีบ ไอกรนไร้เซลล์", route: "IM", note: "ใช้ทดแทนวัคซีนพื้นฐาน (ทดแทน DTP)", info: "เริ่มฉีดได้ตั้งแต่อายุ ≥ 3 ปี (แนะนำกระตุ้นที่ 4 ปี)", price: "644 บาท" },
+    { name: "IPD (Synflorix / Prevnar 20 / Weuphoria)", thai: "วัคซีนป้องกันเชื้อนิวโมคอคคัส", route: "IM", info: "ฉีดอายุ 2, 4, 6 และ 15 เดือน", price: "1,469 - 2,533 บาท" },
+    { name: "Bexsero", thai: "วัคซีนป้องกันโรคไข้กาฬหลังแอ่น สายพันธุ์ B", route: "IM", info: "เริ่ม 2 เดือน (2, 4 เดือน, 1 ปี) | อายุ < 1 ปี ฉีด 3 เข็ม (ห่าง 2 เดือน และ 6 เดือน) / อายุ > 1 ปี ฉีด 2 เข็ม (ห่าง 2 เดือน)", price: "3,071 บาท" },
+    { name: "Varivax", thai: "วัคซีนป้องกันโรคอีสุกอีใส", route: "SC", info: "เริ่ม 1 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "983 บาท" },
+    { name: "EntroVac", thai: "วัคซีนป้องกันโรคมือเท้าปาก (EV71)", route: "IM", info: "เริ่ม 6 เดือน - 5 ปี | ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: "2,701 บาท" },
+    { name: "Influenza", thai: "วัคซีนป้องกันโรคไข้หวัดใหญ่", route: "IM", info: "เริ่มฉีดที่ 6 เดือน | ฉีดปีละครั้ง สำหรับเด็กอายุ < 9 ปี ที่เริ่มฉีดปีแรก ให้ฉีด 2 เข็ม ห่างกัน 1 เดือน", price: "306 บาท" },
+    { name: "QdengaPFS", thai: "วัคซีนป้องกันโรคไข้เลือดออก", route: "SC", info: "เริ่ม 4 ปี | ฉีด 2 เข็ม ห่างกัน 3 เดือน", price: "1,639 บาท" }
 ];
 
-// รายการช่วงอายุสำหรับการนำทาง
-const ageMilestones = [
-    { key: "0", label: "แรกเกิด", desc: "แรกเกิด (BCG, HBV 1)" },
-    { key: "1", label: "1 เดือน", desc: "1 เดือน (HBV 2 เฉพาะแม่เป็นพาหะ)" },
-    { key: "2", label: "2 เดือน", desc: "2 เดือน (5/6 โรค, IPV, Rota, IPD 1, Bexsero 1)" },
-    { key: "4", label: "4 เดือน", desc: "4 เดือน (5 โรค, IPV, Rota, IPD 2, Bexsero 2)" },
-    { key: "6", label: "6 เดือน", desc: "6 เดือน (5/6 โรค, OPV, Rota, IPD 3, มือเท้าปาก, ไข้หวัดใหญ่)" },
-    { key: "9", label: "9 เดือน", desc: "9 เดือน (ตรวจเลือด CBC, ไข้สมองอักเสบ JE 1)" },
-    { key: "12", label: "1 ปี (12 ด.)", desc: "12 เดือน (หัด MMR 1, อีสุกอีใส, Bexsero)" },
-    { key: "15", label: "1 ปี 3 ด. (15 ด.)", desc: "15 เดือน (IPD เข็มกระตุ้น)" },
-    { key: "18", label: "1 ปี 6 ด. (18 ด.)", desc: "18 เดือน (DTP 4, โปลิโอ 4, MMR 2, รวม 5 โรค)" },
-    { key: "24", label: "2 ปี (24 ด.)", desc: "24 เดือน (ไข้สมองอักเสบ JE 2)" },
-    { key: "48", label: "4 ปี (48 ด.)", desc: "48 เดือน (ตรวจเลือด, DTP 5 / Boostagen / รวม 5 โรค, โปลิโอ 5, ไข้เลือดออก)" }
-];
-
-
-/**
- * Vaccine Guide - Smart Console Application Logic (v2)
- * Clean, Reactive, and Patient-Centric Architecture
- * หน่วยงาน: ห้องตรวจพิเศษเด็ก 1 OPD 27 โรงพยาบาลมหาราชนครเชียงใหม่
- */
-
-// Application State
-const state = {
-    currentAgeKey: "2", // Default to 2 months milestone
-    selectedDob: null,
-    activePreset: "basic", // 'basic' | 'comfort' | 'total' | 'custom'
-    selectedOptional: {}, // Map of ageKey -> Set of optional item IDs
-    ipdSelections: {}, // Map of ageKey -> { name, price }
-    searchQuery: ""
-};
-
-// Initialize Application
-document.addEventListener("DOMContentLoaded", () => {
-    initMilestonesBar();
-    initDefaultSelections();
-    renderConsole();
-});
-
-/**
- * Initialize Default Selections for All Age Milestones
- */
-function initDefaultSelections() {
-    Object.keys(vaccineData).forEach(ageKey => {
-        state.selectedOptional[ageKey] = new Set();
-        state.ipdSelections[ageKey] = null;
-    });
-}
-
-/**
- * Render Milestone Navigation Chips
- */
-function initMilestonesBar() {
-    const container = document.getElementById("milestonesBar");
-    if (!container) return;
-
-    container.innerHTML = "";
-    ageMilestones.forEach(item => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = `milestone-chip ${item.key === state.currentAgeKey ? "active" : ""}`;
-        btn.id = `milestoneChip_${item.key}`;
-        btn.textContent = item.label;
-        btn.title = item.desc;
-        btn.onclick = () => selectAgeMilestone(item.key);
-        container.appendChild(btn);
-    });
-}
-
-/**
- * Handle Age Milestone Selection
- */
-function selectAgeMilestone(ageKey) {
-    state.currentAgeKey = ageKey;
-
-    // Update active class on milestone chips
-    document.querySelectorAll(".milestone-chip").forEach(chip => {
-        chip.classList.remove("active");
-    });
-    const activeChip = document.getElementById(`milestoneChip_${ageKey}`);
-    if (activeChip) activeChip.classList.add("active");
-
-    // Detect preset state for this age
-    detectPresetState();
-
-    // Re-render UI
-    renderConsole();
-}
-
-/**
- * Handle Patient Date of Birth Change (Smart DOB & Appointment Engine)
- */
-function handleDobChange() {
-    const input = document.getElementById("dobInput");
-    const calcResultEl = document.getElementById("dobCalcResult");
-    const ageTextEl = document.getElementById("dobAgeText");
-    const nextVisitEl = document.getElementById("nextVisitBadge");
-    const nextVisitTextEl = document.getElementById("nextVisitDateText");
-
-    if (!input || !input.value) {
-        state.selectedDob = null;
-        if (calcResultEl) calcResultEl.style.display = "none";
-        if (nextVisitEl) nextVisitEl.style.display = "none";
-        return;
+function filterVaccine() {
+    const age = document.getElementById("ageSelect").value;
+    const listDiv = document.getElementById("vaccineList");
+    const emergencyDiv = document.getElementById("emergencySection");
+    const floatBar = document.getElementById("floatingSummary");
+    
+    listDiv.innerHTML = "";
+    
+    if (age === "") { 
+        emergencyDiv.style.display = "none"; 
+        floatBar.style.display = "none";
+        return; 
     }
-
-    const dob = new Date(input.value);
-    const today = new Date();
-
-    if (dob > today) {
-        alert("วันเกิดต้องไม่เป็นวันที่ในอนาคตครับ");
-        input.value = "";
-        return;
-    }
-
-    state.selectedDob = dob;
-
-    // Calculate Age in Months and Days
-    let months = (today.getFullYear() - dob.getFullYear()) * 12 + (today.getMonth() - dob.getMonth());
-    let days = today.getDate() - dob.getDate();
-    if (days < 0) {
-        months -= 1;
-        const prevMonthDays = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-        days += prevMonthDays;
-    }
-
-    // Display Exact Age
-    let ageStr = "";
-    if (months <= 0) {
-        ageStr = `น้องอายุ: ${days} วัน`;
-    } else {
-        const years = Math.floor(months / 12);
-        const remMonths = months % 12;
-        if (years > 0) {
-            ageStr = `น้องอายุ: ${years} ขวบ ${remMonths} เดือน (${days} วัน)`;
-        } else {
-            ageStr = `น้องอายุ: ${months} เดือน ${days} วัน`;
-        }
-    }
-
-    ageTextEl.textContent = ageStr;
-    calcResultEl.style.display = "inline-flex";
-
-    // Auto-match closest age milestone
-    const matchedKey = matchClosestMilestone(months);
-    selectAgeMilestone(matchedKey);
-
-    // Calculate Next Visit Date
-    const nextVisit = calculateNextVisit(dob, matchedKey);
-    if (nextVisit) {
-        nextVisitTextEl.textContent = nextVisit;
-        nextVisitEl.style.display = "inline-flex";
-    } else {
-        nextVisitEl.style.display = "none";
-    }
-}
-
-/**
- * Match Closest Pediatric Milestone
- */
-function matchClosestMilestone(months) {
-    if (months < 1) return "0";
-    if (months < 2) return "1";
-    if (months < 3) return "2";
-    if (months < 5) return "4";
-    if (months < 8) return "6";
-    if (months < 11) return "9";
-    if (months < 14) return "12";
-    if (months < 17) return "15";
-    if (months < 22) return "18";
-    if (months < 36) return "24";
-    return "48";
-}
-
-/**
- * Calculate Next Visit Date based on Milestone
- */
-function calculateNextVisit(dob, currentMilestone) {
-    const milestoneSchedule = [
-        { key: "0", nextMonths: 1, label: "1 เดือน" },
-        { key: "1", nextMonths: 2, label: "2 เดือน" },
-        { key: "2", nextMonths: 4, label: "4 เดือน" },
-        { key: "4", nextMonths: 6, label: "6 เดือน" },
-        { key: "6", nextMonths: 9, label: "9 เดือน" },
-        { key: "9", nextMonths: 12, label: "1 ปี" },
-        { key: "12", nextMonths: 15, label: "1 ปี 3 เดือน" },
-        { key: "15", nextMonths: 18, label: "1 ปี 6 เดือน" },
-        { key: "18", nextMonths: 24, label: "2 ปี" },
-        { key: "24", nextMonths: 48, label: "4 ปี" }
-    ];
-
-    const match = milestoneSchedule.find(m => m.key === currentMilestone);
-    if (!match) return null;
-
-    const nextDate = new Date(dob);
-    nextDate.setMonth(nextDate.getMonth() + match.nextMonths);
-
-    const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    const day = nextDate.getDate();
-    const month = thaiMonths[nextDate.getMonth()];
-    const year = nextDate.getFullYear() + 543;
-
-    return `~ช่วง ${match.label} (ราววันที่ ${day} ${month} ${year})`;
-}
-
-/**
- * 1-Click Smart Clinical Presets
- */
-function applyPreset(presetType) {
-    state.activePreset = presetType;
-    const ageKey = state.currentAgeKey;
-    const items = vaccineData[ageKey] || [];
-    const selectedSet = new Set();
-
-    if (presetType === "basic") {
-        // Clear all optional vaccines
-        state.selectedOptional[ageKey] = selectedSet;
-        state.ipdSelections[ageKey] = null;
-    } else if (presetType === "comfort") {
-        // Select vaccines tagged with 'comfort'
-        items.forEach(item => {
-            if (item.type === "optional" && item.preset && item.preset.includes("comfort")) {
-                selectedSet.add(item.id);
-                if (item.isIpdGroup && item.subVariants && item.subVariants.length > 0) {
-                    state.ipdSelections[ageKey] = item.subVariants[0]; // Default to Synflorix
-                }
-            }
+    
+    if (age === "summary") {
+        emergencyDiv.style.display = "none";
+        floatBar.style.display = "none";
+        let summaryHTML = `
+            <div class="summary-header-wrapper">
+                <h3 class="summary-header-title">⭐ สรุปวัคซีนเสริมและวัคซีนทางเลือก</h3>
+                <p class="summary-header-desc">ตารางข้อมูลวัคซีนทางเลือกทั้งหมดสำหรับเด็ก (0 - 4 ปี) พร้อมข้อมูลการให้และราคาให้บริการ</p>
+            </div>
+            <div class="summary-grid">
+        `;
+        optionalSummary.forEach(s => {
+            summaryHTML += `
+                <div class="summary-card">
+                    <div>
+                        <div class="summary-card-top">
+                            <span class="summary-badge-pill">⭐ วัคซีนเสริม</span>
+                            <span class="summary-route-badge">📍 ${s.route}</span>
+                        </div>
+                        <div class="summary-name-section">
+                            <div class="summary-brand">${s.name}</div>
+                            <div class="summary-thai">${s.thai}</div>
+                        </div>
+                        ${s.note ? `
+                            <div class="summary-note-box">
+                                <span>⚡</span> <span>${s.note}</span>
+                            </div>
+                        ` : ''}
+                        <div class="summary-schedule-box">
+                            📅 <strong>ตารางการให้:</strong> ${s.info}
+                        </div>
+                    </div>
+                    <div class="summary-card-bottom">
+                        <span style="font-size: 0.85em; color: #64748B;">ราคาค่าบริการ</span>
+                        <div class="summary-price-pill">
+                            <span>💰</span> ${s.price}
+                        </div>
+                    </div>
+                </div>
+            `;
         });
-        state.selectedOptional[ageKey] = selectedSet;
-    } else if (presetType === "total") {
-        // Select all vaccines tagged with 'total'
-        items.forEach(item => {
-            if (item.type === "optional" && item.preset && item.preset.includes("total")) {
-                selectedSet.add(item.id);
-                if (item.isIpdGroup && item.subVariants) {
-                    // Default to Prevnar 20 (or first variant)
-                    const prevnar = item.subVariants.find(v => v.name.includes("Prevnar 20")) || item.subVariants[0];
-                    state.ipdSelections[ageKey] = prevnar;
+        summaryHTML += `</div>`;
+        listDiv.innerHTML = summaryHTML;
+    } else {
+        emergencyDiv.style.display = "block";
+        floatBar.style.display = "flex";
+        document.getElementById("floatLabContainer").style.display = (age === "9" || age === "48") ? "block" : "none";
+        
+        if (vaccineData[age]) {
+            vaccineData[age].forEach(v => {
+                const card = document.createElement("div");
+                card.id = `v-card-${v.id}`;
+                card.className = v.type === 'optional' ? 'vaccine-card optional-card' : (v.type === 'screening' ? 'vaccine-card screening' : 'vaccine-card');
+                card.setAttribute("data-route", v.route || "Lab");
+                card.setAttribute("data-vtype", v.type);
+                
+                let tagClass = v.type === 'optional' ? 'tag-optional' : (v.type === 'screening' ? 'tag-lab' : 'tag-basic');
+                let tagText = v.type === 'optional' ? 'วัคซีนเสริม' : (v.type === 'screening' ? 'คัดกรอง' : 'พื้นฐาน');
+                
+                let actionHTML = '';
+                let ipdSelectorHTML = '';
+
+                if (v.type === 'basic' || v.type === 'screening') {
+                    actionHTML = `<div class="card-action-zone"><span style="font-size:11px;color:#888;">เลือกอัตโนมัติ</span></div>`;
+                } else if (v.type === 'optional') {
+                    if (v.isIpdGroup) {
+                        let selectOptions = `<option value="0" data-price="0">-- เลือกยี่ห้อ IPD --</option>`;
+                        v.subVariants.forEach(sub => {
+                            selectOptions += `<option value="${sub.price}" data-price="${sub.price}">${sub.name} (+${sub.price} บ.)</option>`;
+                        });
+                        
+                        actionHTML = `
+                            <div class="card-action-zone">
+                                <label style="cursor:pointer; font-weight:bold; color:var(--navy); font-size:13px;">
+                                    รับวัคซีน IPD เสริม <input type="checkbox" class="ipd-main-check" data-select-id="select-${v.id}" onchange="toggleIpdSelect(this)">
+                                </label>
+                            </div>`;
+
+                        ipdSelectorHTML = `
+                            <div class="ipd-select-container">
+                                <span style="font-size:12px;color:var(--navy);font-weight:bold;display:inline-block;margin-right:10px;">เลือกยี่ห้อรับบริการวันนี้:</span>
+                                <select id="select-${v.id}" class="ipd-variant-select" disabled onchange="updateLiveStats()">
+                                    ${selectOptions}
+                                </select>
+                            </div>`;
+                    } else {
+                        let replaceStr = v.replaceIds ? JSON.stringify(v.replaceIds) : "[]";
+                        actionHTML = `
+                            <div class="card-action-zone">
+                                <label style="cursor:pointer; font-weight:bold; color:var(--navy); font-size:13px;">
+                                    รับตัวนี้ <input type="checkbox" class="opt-card-check" data-id="${v.id}" data-price="${v.price}" data-replace='${replaceStr}' onchange="handleCardSelection(this)">
+                                </label>
+                            </div>`;
+                    }
                 }
-            }
-        });
-        state.selectedOptional[ageKey] = selectedSet;
-    }
 
-    updatePresetUI();
-    renderConsole();
-}
-
-/**
- * Detect Current Preset State based on Active Selections
- */
-function detectPresetState() {
-    const ageKey = state.currentAgeKey;
-    const selectedSet = state.selectedOptional[ageKey] || new Set();
-
-    if (selectedSet.size === 0) {
-        state.activePreset = "basic";
-    } else {
-        // Check if matches comfort or total or custom
-        const items = vaccineData[ageKey] || [];
-        const comfortItems = items.filter(i => i.preset && i.preset.includes("comfort")).map(i => i.id);
-        const totalItems = items.filter(i => i.preset && i.preset.includes("total")).map(i => i.id);
-
-        const isComfort = comfortItems.length > 0 && comfortItems.every(id => selectedSet.has(id)) && selectedSet.size === comfortItems.length;
-        const isTotal = totalItems.length > 0 && totalItems.every(id => selectedSet.has(id)) && selectedSet.size === totalItems.length;
-
-        if (isTotal) state.activePreset = "total";
-        else if (isComfort) state.activePreset = "comfort";
-        else state.activePreset = "custom";
-    }
-
-    updatePresetUI();
-}
-
-/**
- * Update Preset UI Badges and Active Styles
- */
-function updatePresetUI() {
-    const pBasic = document.getElementById("presetBasic");
-    const pComfort = document.getElementById("presetComfort");
-    const pTotal = document.getElementById("presetTotal");
-
-    const iconBasic = document.getElementById("presetBasicIcon");
-    const iconComfort = document.getElementById("presetComfortIcon");
-    const iconTotal = document.getElementById("presetTotalIcon");
-
-    [pBasic, pComfort, pTotal].forEach(el => {
-        if (el) el.className = "preset-card";
-    });
-
-    if (state.activePreset === "basic" && pBasic) {
-        pBasic.classList.add("active");
-        if (iconBasic) iconBasic.textContent = "✓ กำลังเลือกแผนนี้";
-        if (iconComfort) iconComfort.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconTotal) iconTotal.textContent = "○ แตะเพื่อเลือกแผนนี้";
-    } else if (state.activePreset === "comfort" && pComfort) {
-        pComfort.classList.add("active-comfort");
-        if (iconBasic) iconBasic.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconComfort) iconComfort.textContent = "✓ กำลังเลือกแผนนี้";
-        if (iconTotal) iconTotal.textContent = "○ แตะเพื่อเลือกแผนนี้";
-    } else if (state.activePreset === "total" && pTotal) {
-        pTotal.classList.add("active-total");
-        if (iconBasic) iconBasic.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconComfort) iconComfort.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconTotal) iconTotal.textContent = "✓ กำลังเลือกแผนนี้";
-    } else {
-        // Custom
-        if (iconBasic) iconBasic.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconComfort) iconComfort.textContent = "○ แตะเพื่อเลือกแผนนี้";
-        if (iconTotal) iconTotal.textContent = "○ แตะเพื่อเลือกแผนนี้";
-    }
-}
-
-/**
- * Main Render Console Function
- */
-function renderConsole() {
-    const ageKey = state.currentAgeKey;
-    const items = vaccineData[ageKey] || [];
-    const selectedSet = state.selectedOptional[ageKey] || new Set();
-
-    // Determine Replaced Basic IDs
-    const replacedIds = new Set();
-    items.forEach(item => {
-        if (item.type === "optional" && selectedSet.has(item.id) && item.replaceIds) {
-            item.replaceIds.forEach(id => replacedIds.add(id));
+                let displayPrice = '';
+                if (v.type === 'optional') {
+                    if (v.isIpdGroup) {
+                        displayPrice = `<span class="price-tag">💰 ราคาตามยี่ห้อที่เลือก</span>`;
+                    } else {
+                        displayPrice = `<span class="price-tag">💰 ราคา: ${v.price.toLocaleString()} บาท</span>`;
+                    }
+                }
+                
+                card.innerHTML = `
+                    <span class="tag ${tagClass}">${tagText}</span>
+                    ${actionHTML}
+                    <div class="vaccine-name">${v.name} ${v.route ? `<span class="route-tag">${v.route}</span>` : ''}</div>
+                    ${v.detail ? `<div class="important">${v.detail}</div>` : ''}
+                    ${displayPrice}
+                    ${ipdSelectorHTML}
+                    ${v.type !== 'screening' ? `
+                        <div class="grid-info">
+                            <div><span class="label">⚠️ ผลข้างเคียง:</span> <small>${v.sideEffect}</small></div>
+                            <div><span class="label">🏠 การดูแล:</span> <small>${v.care}</small></div>
+                        </div>
+                    ` : ''}
+                `;
+                listDiv.appendChild(card);
+            });
         }
-    });
-
-    renderBasicColumn(items, replacedIds);
-    renderOptionalColumn(items, selectedSet);
-    updateTrackerAndSummary(items, selectedSet, replacedIds);
-}
-
-/**
- * Render Left Column: Basic Schedule (EPI / Free)
- */
-function renderBasicColumn(items, replacedIds) {
-    const container = document.getElementById("basicListContainer");
-    if (!container) return;
-
-    const basicItems = items.filter(i => i.type === "basic" || i.type === "screening");
-    if (basicItems.length === 0) {
-        container.innerHTML = `
-            <div class="v-card" style="text-align: center; color: var(--slate-light); padding: 30px 20px;">
-                <span>🛡️ ไม่มีรายการวัคซีนพื้นฐานที่ต้องฉีดในรอบอายุนี้</span>
-            </div>
-        `;
-        return;
+        updateLiveStats();
     }
-
-    let html = "";
-    basicItems.forEach(item => {
-        const isReplaced = replacedIds.has(item.id);
-        const cardClass = isReplaced ? "v-card replaced-card" : "v-card";
-
-        html += `
-            <div class="${cardClass}" id="card_${item.id}">
-                ${isReplaced ? `
-                    <div class="replaced-banner">
-                        <span>✓ ได้รับวัคซีนทางเลือกทดแทนแล้ว (ลดเจ็บตัว/ลดไข้)</span>
-                    </div>
-                ` : ""}
-
-                <div class="v-card-head">
-                    <div class="v-card-title">${item.name}</div>
-                    <span class="v-tag tag-route">${item.route ? item.route : "ตรวจเลือด"}</span>
-                </div>
-
-                <div class="v-card-tags">
-                    ${item.diseases ? `<span class="v-tag tag-disease">🛡️ ป้องกัน: ${item.diseases}</span>` : ""}
-                    ${item.site ? `<span class="v-tag tag-route">📍 ${item.site}</span>` : ""}
-                    <span class="v-tag tag-price">0 บาท (สปสช.)</span>
-                </div>
-
-                ${item.detail ? `<div class="v-card-desc">${item.detail}</div>` : ""}
-
-                <div class="v-card-care-box">
-                    <div class="care-label">
-                        <span>🌡️ อาการข้างเคียง:</span>
-                    </div>
-                    <div>${item.sideEffect || "-"}</div>
-                    <div class="care-label" style="margin-top: 4px;">
-                        <span>💡 วิธีดูแล:</span>
-                    </div>
-                    <div>${item.care || "-"}</div>
-                </div>
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
 }
 
-/**
- * Render Right Column: Optional & Upgraded Vaccines
- */
-function renderOptionalColumn(items, selectedSet) {
-    const container = document.getElementById("optionalListContainer");
-    if (!container) return;
-
-    const optionalItems = items.filter(i => i.type === "optional");
-    if (optionalItems.length === 0) {
-        container.innerHTML = `
-            <div class="v-card" style="text-align: center; color: var(--slate-light); padding: 30px 20px;">
-                <span>⭐ ไม่มีรายการวัคซีนเสริมเฉพาะในรอบอายุนี้ (ดูสรุปที่คลังวัคซีนเสริมได้ครับ)</span>
-            </div>
-        `;
-        return;
+function toggleIpdSelect(checkbox) {
+    const selectId = checkbox.getAttribute("data-select-id");
+    const selectEl = document.getElementById(selectId);
+    if (selectEl) {
+        selectEl.disabled = !checkbox.checked;
+        if (!checkbox.checked) {
+            selectEl.value = "0";
+        }
     }
-
-    let html = "";
-    optionalItems.forEach(item => {
-        const isChecked = selectedSet.has(item.id);
-        const cardClass = isChecked ? "v-card selected-active" : "v-card";
-
-        // Determine price text
-        let priceDisplay = "";
-        if (item.isIpdGroup) {
-            const chosen = state.ipdSelections[state.currentAgeKey];
-            priceDisplay = chosen ? `${chosen.price.toLocaleString()} บาท` : "1,469 - 2,533 บาท";
-        } else {
-            priceDisplay = `${item.price.toLocaleString()} บาท`;
-        }
-
-        html += `
-            <div class="${cardClass}" id="card_${item.id}">
-                <div class="v-card-head">
-                    <label class="custom-checkbox-label" for="chk_${item.id}">
-                        <input type="checkbox" id="chk_${item.id}" class="v-checkbox" ${isChecked ? "checked" : ""} onchange="toggleOptional('${item.id}')">
-                        <span class="v-card-title">${item.name}</span>
-                    </label>
-                    <span class="v-tag tag-price">${priceDisplay}</span>
-                </div>
-
-                <div class="v-card-tags">
-                    ${item.diseases ? `<span class="v-tag tag-disease">🛡️ ป้องกัน: ${item.diseases}</span>` : ""}
-                    ${item.site ? `<span class="v-tag tag-route">📍 ${item.site}</span>` : ""}
-                    ${item.replaceIds ? `<span class="v-tag" style="background: #FEF3C7; color: #92400E; font-weight: bold;">⚡ ${item.replaceIds.length > 1 ? "รวมเข็มลดเจ็บตัว" : "ทดแทนวัคซีนพื้นฐาน"}</span>` : ""}
-                </div>
-
-                ${item.detail ? `<div class="v-card-desc">${item.detail}</div>` : ""}
-
-                ${item.isIpdGroup && isChecked ? renderIpdSelector(item) : ""}
-
-                <div class="v-card-care-box">
-                    <div class="care-label">
-                        <span>🌡️ อาการข้างเคียง:</span>
-                    </div>
-                    <div>${item.sideEffect || "ไข้ต่ำ ปวดบวมเล็กน้อย"}</div>
-                    <div class="care-label" style="margin-top: 4px;">
-                        <span>💡 วิธีดูแล:</span>
-                    </div>
-                    <div>${item.care || "เช็ดตัวลดไข้ หรือประคบเย็น"}</div>
-                </div>
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
+    updateLiveStats();
 }
 
-/**
- * Render IPD Variant Dropdown
- */
-function renderIpdSelector(item) {
-    const ageKey = state.currentAgeKey;
-    const chosen = state.ipdSelections[ageKey];
-    const currentName = chosen ? chosen.name : "";
-
-    let options = `<option value="">-- กรุณาเลือกยี่ห้อและจำนวนสายพันธุ์ IPD --</option>`;
-    item.subVariants.forEach(variant => {
-        const isSelected = currentName === variant.name ? "selected" : "";
-        options += `<option value="${variant.name}" ${isSelected}>${variant.name} (${variant.tag}) - ${variant.price.toLocaleString()} บาท</option>`;
-    });
-
-    const isWarning = !chosen;
-
-    return `
-        <div class="ipd-selector-wrapper">
-            <label style="font-size: 12.5px; font-weight: 700; color: #0284C7; display: block; margin-bottom: 4px;">
-                💊 เลือกยี่ห้อวัคซีน IPD ที่ต้องการรับบริการ:
-            </label>
-            <select class="ipd-select-input" onchange="handleIpdVariantChange(this.value)">
-                ${options}
-            </select>
-            ${isWarning ? `
-                <div class="ipd-warning-alert">
-                    <span>⚠️ กรุณาเลือกยี่ห้อ IPD เพื่อคำนวณยอดที่ถูกต้อง</span>
-                </div>
-            ` : ""}
-        </div>
-    `;
-}
-
-function toggleOptional(itemId) {
-    const ageKey = state.currentAgeKey;
-    const selectedSet = state.selectedOptional[ageKey] || new Set();
-    const items = vaccineData[ageKey] || [];
-    const currentItem = items.find(i => i.id === itemId);
-
-    if (selectedSet.has(itemId)) {
-        selectedSet.delete(itemId);
-        // If it was IPD, clear selection
-        if (currentItem && currentItem.isIpdGroup) {
-            state.ipdSelections[ageKey] = null;
-        }
-    } else {
-        // หากเป็นวัคซีนเสริมที่มีการทดแทน (replaceIds) ให้ยกเลิกการเลือกวัคซีนเสริมตัวอื่นที่ทดแทนวัคซีนตัวเดียวกัน
-        if (currentItem && currentItem.replaceIds && currentItem.replaceIds.length > 0) {
-            items.forEach(other => {
-                if (other.id !== itemId && other.replaceIds && selectedSet.has(other.id)) {
-                    const hasOverlap = currentItem.replaceIds.some(id => other.replaceIds.includes(id));
+function handleCardSelection(checkbox) {
+    if (checkbox.checked) {
+        const replaceIds = JSON.parse(checkbox.getAttribute("data-replace") || "[]");
+        if (replaceIds.length > 0) {
+            // ยกเลิกการเลือกวัคซีนทดแทนตัวอื่นที่มีรายการแทนที่ทับซ้อนกัน (เช่น Boostagen กับ Infanrix)
+            const otherChecks = document.querySelectorAll(".opt-card-check");
+            otherChecks.forEach(other => {
+                if (other !== checkbox && other.checked) {
+                    const otherReplaces = JSON.parse(other.getAttribute("data-replace") || "[]");
+                    const hasOverlap = replaceIds.some(id => otherReplaces.includes(id));
                     if (hasOverlap) {
-                        selectedSet.delete(other.id);
-                        if (other.isIpdGroup) {
-                            state.ipdSelections[ageKey] = null;
-                        }
+                        other.checked = false;
                     }
                 }
             });
         }
+    }
 
-        selectedSet.add(itemId);
-        // If it is IPD, auto-select first variant
-        if (currentItem && currentItem.isIpdGroup && currentItem.subVariants && currentItem.subVariants.length > 0) {
-            state.ipdSelections[ageKey] = currentItem.subVariants[0]; // Default Synflorix
+    // คำนวณ activeReplacedIds ทั้งหมดจากวัคซีนเสริมที่ถูกเลือกอยู่
+    const activeReplacedIds = new Set();
+    document.querySelectorAll(".opt-card-check:checked").forEach(chk => {
+        const rep = JSON.parse(chk.getAttribute("data-replace") || "[]");
+        rep.forEach(id => activeReplacedIds.add(id));
+    });
+
+    // อัปเดตการแสดงผลขีดฆ่า (.removed-card) ของวัคซีนพื้นฐาน
+    document.querySelectorAll(".vaccine-card[data-vtype='basic']").forEach(card => {
+        const cardId = card.id.replace("v-card-", "");
+        if (activeReplacedIds.has(cardId)) {
+            card.classList.add("removed-card");
+        } else {
+            card.classList.remove("removed-card");
         }
-    }
+    });
 
-    state.selectedOptional[ageKey] = selectedSet;
-    detectPresetState();
-    renderConsole();
+    updateLiveStats();
 }
 
-/**
- * Handle IPD Variant Selection Change
- */
-function handleIpdVariantChange(variantName) {
-    const ageKey = state.currentAgeKey;
-    const items = vaccineData[ageKey] || [];
-    const ipdItem = items.find(i => i.isIpdGroup);
-
-    if (!ipdItem) return;
-
-    if (!variantName) {
-        state.ipdSelections[ageKey] = null;
-    } else {
-        const found = ipdItem.subVariants.find(v => v.name === variantName);
-        state.ipdSelections[ageKey] = found || null;
-    }
-
-    renderConsole();
-}
-
-/**
- * Update Anatomical Injection Sites Tracker & Floating Summary Metrics
- */
-function updateTrackerAndSummary(items, selectedSet, replacedIds) {
-    const siteLeftThighEl = document.getElementById("siteLeftThigh");
-    const siteRightThighEl = document.getElementById("siteRightThigh");
-    const siteArmEl = document.getElementById("siteArm");
-    const siteOralEl = document.getElementById("siteOral");
-    const savingsBadgeEl = document.getElementById("needleSavingsBadge");
-
-    const sumCostEl = document.getElementById("summaryTotalCost");
-    const sumNeedleEl = document.getElementById("summaryNeedleCount");
-    const sumOralEl = document.getElementById("summaryOralCount");
-    const sumPainEl = document.getElementById("summaryPainSaved");
-
-    // Lists for sites
-    const leftThighItems = [];
-    const rightThighItems = [];
-    const armItems = [];
-    const oralItems = [];
-
-    let totalCost = 0;
-    let basicNeedles = 0;
-    let optionalNeedles = 0;
+function updateLiveStats() {
+    let totalPrice = 0;
+    let injectCount = 0;
     let oralCount = 0;
-    let replacedCount = 0;
+    let labCount = 0;
 
-    // Process Basic Items
-    items.forEach(item => {
-        if (item.type === "basic") {
-            if (replacedIds.has(item.id)) {
-                replacedCount++;
-                return; // Replaced, no jab!
+    const allCards = document.querySelectorAll(".vaccine-card");
+    
+    allCards.forEach(card => {
+        if (card.classList.contains("removed-card")) return;
+        
+        const vtype = card.getAttribute("data-vtype");
+        const route = card.getAttribute("data-route");
+        
+        if (vtype === "basic") {
+            if (route === "Oral") oralCount++;
+            else if (route === "IM" || route === "ID" || route === "SC") injectCount++;
+        } else if (vtype === "screening") {
+            labCount++;
+        } else if (vtype === "optional") {
+            const checkbox = card.querySelector(".opt-card-check");
+            if (checkbox && checkbox.checked) {
+                totalPrice += parseFloat(checkbox.getAttribute("data-price") || 0);
+                if (route === "Oral") oralCount++;
+                else if (route === "IM" || route === "ID" || route === "SC") injectCount++;
             }
-
-            if (item.route === "Oral") {
-                oralCount++;
-                oralItems.push(item.name.split(" ")[0]);
-            } else {
-                basicNeedles++;
-                if (item.site && item.site.includes("แขน")) {
-                    armItems.push(item.name.split(" ")[0]);
-                } else if (item.site && item.site.includes("ซ้าย")) {
-                    leftThighItems.push(item.name.split(" ")[0]);
-                } else if (item.site && item.site.includes("ขวา")) {
-                    rightThighItems.push(item.name.split(" ")[0]);
-                } else {
-                    leftThighItems.push(item.name.split(" ")[0]);
+            
+            const ipdCheck = card.querySelector(".ipd-main-check");
+            const selectIpd = card.querySelector(".ipd-variant-select");
+            if (ipdCheck && ipdCheck.checked && selectIpd) {
+                const ipdPrice = parseFloat(selectIpd.value || 0);
+                totalPrice += ipdPrice;
+                if (ipdPrice > 0) {
+                    if (route === "Oral") oralCount++;
+                    else if (route === "IM" || route === "ID" || route === "SC") injectCount++;
                 }
             }
         }
     });
 
-    // Process Selected Optional Items
-    items.forEach(item => {
-        if (item.type === "optional" && selectedSet.has(item.id)) {
-            if (item.isIpdGroup) {
-                const chosen = state.ipdSelections[state.currentAgeKey];
-                if (chosen) {
-                    totalCost += chosen.price;
-                    optionalNeedles++;
-                    rightThighItems.push(`IPD (${chosen.name.split(" ")[0]})`);
-                }
-            } else {
-                totalCost += item.price;
-                if (item.route === "Oral") {
-                    oralCount++;
-                    oralItems.push(item.name.split(" ")[0]);
-                } else {
-                    optionalNeedles++;
-                    if (item.site && item.site.includes("แขน")) {
-                        armItems.push(item.name.split(" ")[0]);
-                    } else if (item.site && item.site.includes("ซ้าย")) {
-                        leftThighItems.push(item.name.split(" ")[0]);
-                    } else if (item.site && item.site.includes("ขวา")) {
-                        rightThighItems.push(item.name.split(" ")[0]);
-                    } else {
-                        rightThighItems.push(item.name.split(" ")[0]);
-                    }
-                }
-            }
-        }
-    });
-
-    const totalNeedles = basicNeedles + optionalNeedles;
-
-    // Render Anatomical Site Boxes
-    siteLeftThighEl.innerHTML = leftThighItems.length > 0 ? leftThighItems.join(", ") : `<span class="site-empty">- ไม่มีเข็มฉีด -</span>`;
-    siteRightThighEl.innerHTML = rightThighItems.length > 0 ? rightThighItems.join(", ") : `<span class="site-empty">- ไม่มีเข็มฉีด -</span>`;
-    siteArmEl.innerHTML = armItems.length > 0 ? armItems.join(", ") : `<span class="site-empty">- ไม่มีเข็มฉีด -</span>`;
-    siteOralEl.innerHTML = oralItems.length > 0 ? oralItems.join(", ") : `<span class="site-empty">- ไม่มีการหยอด -</span>`;
-
-    // Update Needle Savings Pill
-    if (replacedCount > 0) {
-        savingsBadgeEl.className = "needle-savings-pill highlight-anim";
-        savingsBadgeEl.innerHTML = `<span>🎉 รวมเข็มสำเร็จ! เจ็บตัวลดลง ${replacedCount} เข็ม</span>`;
-    } else {
-        savingsBadgeEl.className = "needle-savings-pill";
-        savingsBadgeEl.innerHTML = `<span>💉 สถิติตามเกณฑ์ปกติ</span>`;
-    }
-
-    // Update Floating Metrics
-    sumCostEl.textContent = `${totalCost.toLocaleString()} บาท`;
-    sumNeedleEl.textContent = `${totalNeedles} เข็ม`;
-    sumOralEl.textContent = `${oralCount} ครั้ง`;
-
-    if (replacedCount > 0) {
-        sumPainEl.textContent = `ลดเจ็บ ${replacedCount} เข็ม!`;
-        sumPainEl.style.color = "#34D399";
-    } else {
-        sumPainEl.textContent = "เกณฑ์ปกติ";
-        sumPainEl.style.color = "#94A3B8";
-    }
+    document.getElementById("floatInject").innerText = injectCount;
+    document.getElementById("floatOral").innerText = oralCount;
+    document.getElementById("floatLab").innerText = labCount;
+    document.getElementById("floatPrice").innerText = totalPrice.toLocaleString();
 }
-
-/**
- * Toggle Guidelines Accordion
- */
-function toggleGuidelineAccordion() {
-    const content = document.getElementById("guidelineContent");
-    const chevron = document.getElementById("accordionChevron");
-    if (!content) return;
-
-    if (content.style.display === "block") {
-        content.style.display = "none";
-        chevron.textContent = "▼ คลิกดูรายละเอียด";
-    } else {
-        content.style.display = "block";
-        chevron.textContent = "▲ ซ่อนรายละเอียด";
-    }
-}
-
-/**
- * Quick Vaccine Search Modal Logic
- */
-function openSearchModal() {
-    const modal = document.getElementById("searchModal");
-    const input = document.getElementById("modalSearchInput");
-    if (!modal) return;
-
-    modal.style.display = "flex";
-    if (input) {
-        input.value = "";
-        input.focus();
-    }
-    renderSearchResults("");
-}
-
-function closeSearchModal() {
-    const modal = document.getElementById("searchModal");
-    if (modal) modal.style.display = "none";
-}
-
-function handleModalBackdropClick(event) {
-    if (event.target.id === "searchModal") {
-        closeSearchModal();
-    }
-}
-
-function handleSearchFilter() {
-    const input = document.getElementById("modalSearchInput");
-    const query = input ? input.value.trim().toLowerCase() : "";
-    renderSearchResults(query);
-}
-
-function renderSearchResults(query) {
-    const container = document.getElementById("searchResultsContainer");
-    if (!container) return;
-
-    const filtered = optionalSummary.filter(item => {
-        if (!query) return true;
-        return item.name.toLowerCase().includes(query) ||
-               item.thai.toLowerCase().includes(query) ||
-               item.target.toLowerCase().includes(query) ||
-               item.info.toLowerCase().includes(query);
-    });
-
-    if (filtered.length === 0) {
-        container.innerHTML = `
-            <div style="text-align: center; color: var(--slate-light); padding: 30px;">
-                <span>ไม่พบข้อมูลวัคซีนที่ค้นหา</span>
-            </div>
-        `;
-        return;
-    }
-
-    let html = "";
-    filtered.forEach(item => {
-        html += `
-            <div class="search-item-card">
-                <div class="search-item-title">
-                    <span>${item.name} <small style="font-weight: 500; color: #475569;">(${item.thai})</small></span>
-                    <span class="v-tag tag-price">${item.priceText}</span>
-                </div>
-                <div class="search-item-desc" style="margin-bottom: 4px;">
-                    <strong>🛡️ ป้องกัน:</strong> ${item.target}
-                </div>
-                <div class="search-item-desc" style="color: #0369A1;">
-                    <strong>📅 ช่วงอายุที่ฉีด:</strong> ${item.info} | <strong>วิธีให้:</strong> ${item.route}
-                </div>
-                ${item.note ? `<div class="search-item-desc" style="margin-top: 4px; color: #64748B;">*${item.note}</div>` : ""}
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-/**
- * 1-Click Copy Summary for LINE Messaging
- */
-function copyLineSummary() {
-    const ageKey = state.currentAgeKey;
-    const milestone = ageMilestones.find(m => m.key === ageKey);
-    const items = vaccineData[ageKey] || [];
-    const selectedSet = state.selectedOptional[ageKey] || new Set();
-
-    let optionalLines = [];
-    let totalCost = 0;
-
-    items.forEach(item => {
-        if (item.type === "optional" && selectedSet.has(item.id)) {
-            if (item.isIpdGroup) {
-                const chosen = state.ipdSelections[ageKey];
-                if (chosen) {
-                    totalCost += chosen.price;
-                    optionalLines.push(`• IPD (${chosen.name}): ${chosen.price.toLocaleString()} บาท`);
-                }
-            } else {
-                totalCost += item.price;
-                optionalLines.push(`• ${item.name}: ${item.price.toLocaleString()} บาท`);
-            }
-        }
-    });
-
-    let ageDisplay = milestone ? milestone.label : `${ageKey} เดือน`;
-    if (state.selectedDob) {
-        const ageTextEl = document.getElementById("dobAgeText");
-        if (ageTextEl) ageDisplay += ` (${ageTextEl.textContent})`;
-    }
-
-    const text = 
-`🏥 สรุปแผนวัคซีนเด็ก - OPD 27 รพ.มหาราชนครเชียงใหม่
-👶 ช่วงอายุ: ${ageDisplay}
-───────────────────
-🛡️ แผนวัคซีนพื้นฐาน สปสช.: รับบริการตามเกณฑ์ (0 บาท)
-⭐ วัคซีนทางเลือก/วัคซีนเสริมที่เลือก:
-${optionalLines.length > 0 ? optionalLines.join("\n") : "• ไม่ได้รับวัคซีนเสริมเพิ่มเติม"}
-───────────────────
-💰 ยอดชำระโดยประมาณ: ${totalCost.toLocaleString()} บาท
-
-🌡️ การดูแลเมื่อมีไข้หลังฉีด:
-- เช็ดตัวด้วยน้ำอุ่นบิดหมาด
-- ทานยาลดไข้พาราเซตามอลตามขนาดที่แพทย์สั่ง
-- หากปวดบวมให้ประคบเย็น 24 ชม. แรก
-- สอบถามเพิ่มเติมโทร: 35757 / 36658 (OPD 27)`;
-
-    navigator.clipboard.writeText(text).then(() => {
-        showToast("✓ คัดลอกข้อความสรุปสำหรับส่ง LINE เรียบร้อยแล้ว");
-    }).catch(() => {
-        // Fallback
-        const dummy = document.createElement("textarea");
-        dummy.value = text;
-        document.body.appendChild(dummy);
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
-        showToast("✓ คัดลอกข้อความสรุปเรียบร้อยแล้ว");
-    });
-}
-
-/**
- * Print A4 Counseling Sheet
- */
-function printCounselingSheet() {
-    const ageKey = state.currentAgeKey;
-    const milestone = ageMilestones.find(m => m.key === ageKey);
-    const printMetaEl = document.getElementById("printMetaInfo");
-
-    const today = new Date();
-    const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    const dateStr = `${today.getDate()} ${thaiMonths[today.getMonth()]} ${today.getFullYear() + 543}`;
-
-    if (printMetaEl) {
-        printMetaEl.textContent = `วันที่ประเมิน: ${dateStr} | ช่วงอายุเด็ก: ${milestone ? milestone.label : ageKey + " เดือน"}`;
-    }
-
-    window.print();
-}
-
-/**
- * Toast Notification Helper
- */
-function showToast(msg) {
-    const toast = document.getElementById("toastNotice");
-    const msgEl = document.getElementById("toastMessage");
-    if (!toast || !msgEl) return;
-
-    msgEl.textContent = msg;
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2800);
-}
-
 </script>
-
 </body>
 </html>
