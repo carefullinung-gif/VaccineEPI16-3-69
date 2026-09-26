@@ -26,7 +26,7 @@
 - `type`: ประเภทของรายการ (`basic` = พื้นฐาน, `optional` = วัคซีนเสริม, `screening` = คัดกรอง)
 - `name`: ชื่อทางการค้าและชื่อภาษาไทยกำกับโรค
 - `route`: ช่องทางการให้ยา (`IM` = เข้ากล้ามเนื้อ, `SC` = ใต้ผิวหนัง, `ID` = ในผิวหนัง, `Oral` = กิน/หยอด)
-- `replaceIds`: Array ของ `id` วัคซีนพื้นฐานที่จะถูกแทนที่ (เฉพาะวัคซีนรวมเสริม เช่น Infanrix)
+- `replaceIds`: Array ของ `id` วัคซีนพื้นฐานที่จะถูกแทนที่ (เช่น Infanrix-Hexa, Infanrix-IPV-HIB หรือ Boostagen)
 - `isIpdGroup`: แฟล็กบอกว่าเป็นกลุ่มที่ต้องเลือกยี่ห้อ (IPD)
 - `subVariants`: รายการยี่ห้อย่อยพร้อมราคาของวัคซีน IPD
 - `price`: ราคา (ตัวเลขหรือข้อความ)
@@ -84,10 +84,10 @@ updateLiveStats()
 - หากเลือกช่วงอายุ จะทำการล้าง DOM เดิม แล้วสร้างการ์ดวัคซีนพร้อมกำหนด Attribute ต่างๆ (`data-route`, `data-vtype`) เพื่อใช้ในการคำนวณ
 
 ### 4.2 ฟังก์ชัน `handleCardSelection(checkbox)`
-- ใช้จัดการวัคซีนเสริมที่มีการแทนที่ เช่น **Infanrix-Hexa** หรือ **Infanrix-IPV-HIB**
+- ใช้จัดการวัคซีนเสริมที่มีการแทนที่ เช่น **Infanrix-Hexa**, **Infanrix-IPV-HIB** หรือ **Boostagen (TdaP)**
 - อ่านค่า `replaceIds` จาก Attribute `data-replace` ของ Checkbox
-- หากถูกเลือก (Checked): ดึงการ์ดวัคซีนพื้นฐานที่เกี่ยวข้องมาใส่คลาส `.removed-card` (ลด Opacity เหลือ 0.4, เปลี่ยนสีขอบเป็นแดง, ขีดฆ่าข้อความ)
-- หากยกเลิกการเลือก (Unchecked): ถอดคลาส `.removed-card` ออก เพื่อให้วัคซีนพื้นฐานกลับมามีผลตามเดิม
+- จัดการกรณีตัวเลือกที่แทนที่ทับซ้อนกัน (Mutual Exclusivity) อัตโนมัติ เช่น หากเลือก Boostagen (แทน DTP) จะปลดเลือก Infanrix-IPV-HIB และในทางกลับกัน
+- ทำการคำนวณสถานะ `.removed-card` แบบ Dynamic Re-evaluation จากทุกตัวเลือกที่กำลังเปิดใช้งาน เพื่อให้การขีดฆ่าวัคซีนพื้นฐานถูกต้องเสมอ
 
 ### 4.3 ฟังก์ชัน `toggleIpdSelect(checkbox)`
 - ทำงานร่วมกับ Checkbox "รับวัคซีน IPD เสริม"

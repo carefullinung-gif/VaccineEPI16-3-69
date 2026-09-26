@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Guide - Dual Window Split Comparison (v1 vs v2)</title>
+    <!-- Google Fonts: Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #001F5B;
+            --primary: #0284C7;
+            --accent: #10B981;
+            --bg-topbar: #0F172A;
+            --border-color: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Sarabun', sans-serif;
+            background: #0B0F19;
+            color: #F8FAFC;
+        }
+
+        /* Top Global Comparison Bar */
+        .split-topbar {
+            height: 54px;
+            background: var(--bg-topbar);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 100;
+        }
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .topbar-brand h1 {
+            font-size: 1.1em;
+            color: #FFFFFF;
+            letter-spacing: 0.5px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .topbar-badge {
+            background: #1E293B;
+            color: #38BDF8;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        .topbar-sub {
+            color: #94A3B8;
+            font-size: 0.82em;
+            margin-left: 5px;
+        }
+        @media (max-width: 900px) {
+            .topbar-sub { display: none; }
+        }
+
+        /* View Mode Controls */
+        .view-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #1E293B;
+            padding: 3px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+        }
+        .view-btn {
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .view-btn:hover {
+            color: #FFFFFF;
+        }
+        .view-btn.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-action {
+            background: #1E293B;
+            border: 1px solid #334155;
+            color: #E2E8F0;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        .btn-action:hover {
+            background: #334155;
+            color: #FFFFFF;
+        }
+
+        /* Dual Window Split Layout */
+        .split-main {
+            height: calc(100% - 54px);
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 8px;
+            background: #0B0F19;
+            transition: all 0.3s ease;
+        }
+        .split-main.view-v1-only {
+            grid-template-columns: 1fr 0px;
+            gap: 0;
+        }
+        .split-main.view-v1-only #paneV2 {
+            display: none;
+        }
+        .split-main.view-v2-only {
+            grid-template-columns: 0px 1fr;
+            gap: 0;
+        }
+        .split-main.view-v2-only #paneV1 {
+            display: none;
+        }
+
+        /* Window Frame Styling */
+        .window-pane {
+            background: #FFFFFF;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            height: 100%;
+        }
+
+        /* Mac-like Window Header */
+        .window-header {
+            height: 38px;
+            background: #1E293B;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            user-select: none;
+        }
+        .window-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #EF4444; }
+        .dot-yellow { background: #F59E0B; }
+        .dot-green { background: #10B981; }
+
+        .window-title {
+            font-size: 12.5px;
+            font-weight: bold;
+            color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .window-badge-v1 {
+            background: #3B82F6;
+            color: #FFFFFF;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+        .window-badge-v2 {
+            background: #10B981;
+            color: #FFFFFF;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+
+        .window-link {
+            color: #94A3B8;
+            font-size: 11px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+        }
+        .window-link:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Iframes */
+        .window-iframe {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #F8FAFC;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Global Comparison Navigation Bar -->
+    <header class="split-topbar">
+        <div class="topbar-brand">
+            <h1>
+                <span>🏥 VACCINE GUIDE</span>
+                <span class="topbar-badge">Dual-Window View</span>
+            </h1>
+            <span class="topbar-sub">หน้าต่างเปรียบเทียบ 2 ระบบคู่ขนาน (แยกอิสระจากกัน)</span>
+        </div>
+
+        <!-- Mode Switch Buttons -->
+        <div class="view-controls">
+            <button type="button" class="view-btn active" id="btnSplit" onclick="switchView('split')">
+                ⬛⬛ แบ่งครึ่ง 50/50
+            </button>
+            <button type="button" class="view-btn" id="btnV1" onclick="switchView('v1')">
+                👈 เฉพาะเว็บ 1 (ดั้งเดิม)
+            </button>
+            <button type="button" class="view-btn" id="btnV2" onclick="switchView('v2')">
+                👉 เฉพาะเว็บ 2 (ดีไซน์ใหม่)
+            </button>
+        </div>
+
+        <div class="topbar-actions">
+            <button type="button" class="btn-action" onclick="reloadBothFrames()" title="รีโหลดหน้าต่างทั้งสองฝั่ง">
+                🔄 รีเฟรชทั้ง 2 ฝั่ง
+            </button>
+        </div>
+    </header>
+
+    <!-- Dual Window Split Container -->
+    <main class="split-main" id="splitMain">
+        
+        <!-- Left Window: Web 1 (Original Single-File) -->
+        <section class="window-pane" id="paneV1">
+            <div class="window-header">
+                <div class="window-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <div class="window-title">
+                    <span class="window-badge-v1">เว็บที่ 1</span>
+                    <span>เวอร์ชันดั้งเดิม (Single-File v1)</span>
+                </div>
+                <a href="../index.html" target="_blank" class="window-link" title="เปิดหน้าเว็บที่ 1 เต็มจอ">
+                    ↗ เปิดเต็มจอ
+                </a>
+            </div>
+            <iframe src="../index.html" id="frameV1" class="window-iframe" title="Vaccine Guide v1"></iframe>
+        </section>
+
+        <!-- Right Window: Web 2 (Modular Redesigned Comparison Matrix) -->
+        <section class="window-pane" id="paneV2">
+            <div class="window-header">
+                <div class="window-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <div class="window-title">
+                    <span class="window-badge-v2">เว็บที่ 2</span>
+                    <span>เวอร์ชันใหม่ (Smart Console 2.0)</span>
+                </div>
+                <a href="v2_app.html" target="_blank" class="window-link" title="เปิดหน้าเว็บที่ 2 เต็มจอ">
+                    ↗ เปิดเต็มจอ
+                </a>
+            </div>
+            <iframe src="v2_app.html" id="frameV2" class="window-iframe" title="Vaccine Guide v2"></iframe>
+        </section>
+
+    </main>
+
+    <script>
+        function switchView(mode) {
+            const main = document.getElementById("splitMain");
+            const btnSplit = document.getElementById("btnSplit");
+            const btnV1 = document.getElementById("btnV1");
+            const btnV2 = document.getElementById("btnV2");
+
+            btnSplit.classList.remove("active");
+            btnV1.classList.remove("active");
+            btnV2.classList.remove("active");
+
+            main.classList.remove("view-v1-only", "view-v2-only");
+
+            if (mode === "v1") {
+                main.classList.add("view-v1-only");
+                btnV1.classList.add("active");
+            } else if (mode === "v2") {
+                main.classList.add("view-v2-only");
+                btnV2.classList.add("active");
+            } else {
+                btnSplit.classList.add("active");
+            }
+        }
+
+        function reloadBothFrames() {
+            const f1 = document.getElementById("frameV1");
+            const f2 = document.getElementById("frameV2");
+            if (f1) f1.src = f1.src;
+            if (f2) f2.src = f2.src;
+        }
+    </script>
+</body>
+</html>
